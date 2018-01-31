@@ -9,7 +9,7 @@
 
 // Please note the header above. You need to include the name of the file, the
 // author, a description of the program and any sources used
-#include "lab2.h"
+#include "lab02.h"
 
 
 /*
