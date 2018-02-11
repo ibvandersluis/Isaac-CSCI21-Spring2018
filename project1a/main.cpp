@@ -17,22 +17,26 @@
 #include <fstream>
 #include <ios>
 #include <iomanip>
+#include <vector>
 using namespace std;
+using std::fixed;
+using std::setprecision;
+using std::setfill;
+using std::setw;
 
-/*  This function takes a credit card number, duplicates it as a string, and
+/*  This function takes a credit card number represented as a vector and
     uses this information to determine which type of credit card it is. If it
     doesn't fit any of the if statements, returns unknown.
-    Input: one integer representing the credit card number
+    Input: one integer vector representing the credit card number
     Output: one string stating the card type or unknown*/
-string CardType(int number) {
-    string str = static_cast<string>(number);
-    if ((str.substr(0, 2) == "34" || str.substr(0, 2) == "37") && (str.size() == 15)) {
+string CardType(vector<int> number) {
+    if (number.at(0) == 3 && (number.at(1) == 4 || number.at(1) == 7) && (number.size() == 15)) {
         return "AMERICAN EXPRESS";
-    } else if ((str.substr(0, 4) == "6011" || ((number / 10000000000) >= 622126 && (number / 10000000000)) <= 622925) || ((number / 10000000000000) >= 644 && (number / 10000000000000) <= 649) || str.substr(0,2 == 65)) && (str.size() == "16")) {
+    } else if (number.at(0) = 6 && ((number.at(1) == 0 && number.at(2) == 1 && number.at(3) == 1) || (number.at(1) == 2 && number.at(2) == 2) || (number.at(1) == 4 && number.at(2) >= 4 && number.at(2) <= 9) || number.at(1) == 5) && (number.size() == 16)) {
         return "DISCOVER";
-    } else if ((number / 100000000000000) >= 51 && (number / 100000000000000) <= 55)) && (str.size() == "16")) {
+    } else if (number.at(0) == 5 && number.at(1) >= 1 && number.at(1) <= 5 && number.size() == 16) {
         return "MASTERCARD";
-    } else if ((str.substr(0, 1) == "4" && (str.size() >= 13 && str.size() <= 16) {
+    } else if (number.at(0) == 4 && number.size() >= 13 && number.size() < 16) {
         return "VISA";
     } else {
         return "UNKNOWN CARD TYPE";
@@ -43,47 +47,110 @@ string CardType(int number) {
 /*  This function takes a credit card number, represented as an integer array,
     and runs Luhn's algorithm on it. It returns True if it passes the algorithm,
     and False otherwise.
-    Input: one array of type int
+    Input: a vector of type <int> representing the credit card number
     Output: either 'True' or 'False' */
-bool PassLuhn(string ccnum) {
+bool PassLuhn(vector<int> number) {
+    bool pass = false;                                                          //function will return false unless number passes Luhn's algorithm
+    int stopindex;                                                              //determines index value where card prefix stops
+    int sum;                                                                    //stores sum of numbers in account number
+    int x;                                                                      //stores calculated check digit to check against actual check digit
+    int i;                                                                      //initialized for loops
     
+                                                                                //if-else tree determines where prefix ends
+    if (CardType(number) == "VISA") {
+        stopindex == 0;
+    } else if (CardType(number) == "AMERICAN EXPRESS" || CardType(number) == "MASTERCARD") {
+        stopindex = 1;
+    } else if (CardType(number) == "DISCOVER") {
+        stopindex = 2;
+    }
+    
+    for (i = number.size() - 2; i > stopindex; i -= 2) {
+        number.at(i) *= 2;                                                      //doubles every other number, starting with the first number left of the check digit and excluding the prefix
+        if (number.at(i) > 9) {
+            number.at(i) -= 9;                                                  //subtracts 9 if doubling results in number greater than 9
+        }
+    }
+    
+    sum = 0;                                                                    //for loop calculates what the check digit should be and stores it in x
+    for (i = stopindex + 1; i < number.size() - 1; i++) {
+        sum += number.at(i);
+        sum *= 9;
+        x = sum % 10;
+    }
+                                                                                //if calculated check digit and actual check digit are the same value, passes Luhn's algorithm
+    if (x == number.at(number.size() - 1)) {
+        pass = true;
+    }
+    
+    return pass;
+}
+
+/*  This function returns turns a integer vector into a single number
+    represented as a string.
+    Input: one integer vector representing a credit card number
+    Output: one string of numbers, also representing a credit card number*/
+string WholeNum(vector<int> number) {
+    stringstream whole;
+    for (int i = 0; i < number.size() - 1; i++) {
+        whole << number.at(i);
+    }
+    return whole.str();
 }
 
 int main() {
-    ifstream inFS;
-    ofstream outFS;
-    //istringstream ccnumSS;
-    string ccnum;
-    string cctype;
-    string filename;
-    string validation;
-    int numnum;
+    ifstream        inFS;
+    ofstream        outFS;
+    stringstream    ccnumSS;
+    string          ccnum;
+    string          cctype;
+    string          filename;
+    string          validation;
+    int             count = 0;
+    char            digit;
+    vector<int>     cardnum;
     
-    cout << "Enter file name for import: ";
+    cout << "Enter file name for import: ";                                     //prompts user for import file
     cin >> filename;
     
-    inFS.open(filename);
-    if (!inFS.is_open()) {                              //prints error if file won't open
+    inFS.open(filename);                                                        //opens the file specified by user
+    if (!inFS.is_open()) {                                                      //prints error if file won't open
         cout << "Could not open file " << filename << endl;
         return 1;
     }
     
-    outFS.open("validation.txt");
-    // outFS << setw(20) << left << "CREDIT CARD NUMBER" << "|";
-    // outFS << setw(15) << "TYPE" << "|";
-    // outFS << setw(10) << "RESULT" << endl;
-    // outFS << setfill('¯') << "                    |               |          " << endl;
-    // outFS << setfill(' ');
+    outFS.open("validation.txt");                                               //opens output file and sets up organized table of results
+    outFS << setw(20) << left << "CREDIT CARD NUMBER" << "|";
+    outFS << setw(15) << "TYPE" << "|";
+    outFS << setw(10) << "RESULT" << endl;
+    outFS << setfill('¯') << "                    |               |          " << endl;
+    outFS << setfill(' ');
     
-    while (!inFS.eof()) {
+    while (!inFS.eof()) {                                                       //stores all credit card numbers in a stringstream separated by spaces
         inFS >> ccnum;
-        numnum = static_cast<int>(ccnum);
-        // SS.clear();
-        // SS.str(ccnum);
-        outFS << setw(20) << ccnum << "|" << setw(15) << CardType(numnum) << "|" << setw(10) << "//FIXME" << endl;
+        ccnumSS << ccnum << " ";
+        count++;
     }
     
-    outFS.close();
+    for (int i = 0; i < count; i++) {                                           //for loop is repeated as many times as there are credit card numbers
+        int size;                                                               //variable for clearing the cardnum vector later
+        ccnumSS >> digit;                                                       //reads in one digit from the stringstream
+        while (digit != ' ') {                                                  //so long as digit isn't a space,
+            cardnum.push_back(digit - 48);                                      //pushes digit - 48 (for ascii difference) onto vector
+            ccnumSS >> digit;                                                   //gets next digit
+        }
+        
+        int size = cardnum.size();                                              //sets size to the size of the vector
+        
+        outFS << setw(20) << WholeNum(cardnum) << "|" << setw(15) << CardType(cardnum) << "|" << setw(10) << PassLuhn(cardnum) << endl;
+        
+        for (i = 0; i < size; i++) {                                            //clears all elements from the vector
+            cardnum.pop_back();
+        }
+    }
+    
+    
+    outFS.close();                                                              //closes files
     inFS.close();
     
     return 0;
