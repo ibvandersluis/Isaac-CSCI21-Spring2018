@@ -1,0 +1,100 @@
+/*
+ *  Project 1B - Credit Card
+ *
+ *  Written by           Isaac Vander Sluis
+ *  Created on           2/15/18
+ *
+ *  This program stores credit cards as objects, each containing information
+ *  the credit card number, the first and last name of the card holder, the card
+ *  type, and current balance. The program will iterate through a file of this
+ *  data and store each card as an object in an array. The program will then
+ *  iterate through a list of transactions and determine which should be denied.
+ *  Finally the program outputs a file with declined transactions and the reason
+ *  they were declined, along with accepted transactions, a cost breakdown,
+ *  whether the card is in overdraw or not, and the rebate value.
+ *
+ *  Gold Card:
+ *   
+ *      -   Credit line $3,000
+ *      -   Once limit is reached, the card will be blocked
+ *      -   Each month, a rebate of 1% of the total monthly purchase is awarded to the account
+ *
+ *  Platinum Card:
+ *   
+ *      -   Credit line is $5,000
+ *      -   An overdraft of $1,000 is allowed. A warning message is issued through the account summary
+ *      -   Each month, a rebate of 2% of the total monthly purchase is awarded to the account
+ *
+ *  Corporate Card:
+ * 
+ *      -   Credit line of $10,000
+ *      -   An overdraft of $5, 000 is allowed. A warning message is issued through the account summary
+ *      -   Each month, a rebate of 5% of the total monthly purchase is awarded to the account
+ */
+
+#ifndef functions_h
+#define functions_h
+ 
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <ios>
+#include <iomanip>
+#include <vector>
+using namespace std;
+using std::fixed;
+using std::setprecision;
+using std::setfill;
+using std::setw;
+
+class CreditCard {
+    public:
+        CreditCard();                                                           //constructor
+        
+        void SetCardnum(int number);                                            //mutator
+        void SetFirstname(string name);                                         //mutator
+        void SetLastname(string name);                                          //mutator
+        void SetCardtype(string type);                                          //mutator
+        void SetBalance(double bal);                                            //mutator
+        void SetCreditlim(double lim);                                          //mutator
+        void SetOverdraft(double ovr);
+        
+        int GetCardnum() const;                                                 //accessor
+        string GetFirstname() const;                                            //accessor
+        string GetLastname() const;                                             //accessor
+        string GetCardtype() const;                                             //accessor
+        double GetBalance() const;                                              //accessor
+        double GetCreditlim() const;                                            //accessor
+        double GetOverdraft() const;                                            //accessor
+        
+        string PassLuhn(vector<int> number) const;                              //determines if card passes Luhn's algorithm
+    protected:
+        int cardnum_;                                                           //stores credit card's number
+        string firstname_;                                                      //stores card holder's first name
+        string lastname_;                                                       //stores card holder's last name
+        string cardtype_;                                                       //stores card type
+        double balance_;                                                        //stores balance
+        double creditlim_;                                                      //stores credit limit
+        double overdraft_;                                                      //stores amount of overdraft permitted to card holder
+};
+
+class GoldCard : public CreditCard {
+    public:
+        GoldCard();                                                             //constructor
+    private:
+};
+
+class PlatinumCard : public CreditCard {
+    public:
+        PlatinumCard();                                                         //constructor
+    private:
+};
+
+class CorporateCard : public CreditCard {
+    public:
+        CorporateCard();                                                        //constructor
+    private:
+};
+    
+#endif
