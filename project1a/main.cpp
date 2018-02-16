@@ -46,9 +46,10 @@ int main() {
         
         size = cardnum.size();                                                  //sets size to the size of the vector
         
+                                                                                //prints card number, type, and Luhn's result to output file
         outFS << setw(20) << WholeNum(cardnum) << "|" << setw(20) << CardType(cardnum) << "|" << setw(21) << PassLuhn(cardnum) << endl;
         
-        cardnum.erase(cardnum.begin(), cardnum.end());
+        cardnum.erase(cardnum.begin(), cardnum.end());                          //erases all elements of the vector cardnum
     }
     
     

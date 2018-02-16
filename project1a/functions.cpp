@@ -1,24 +1,24 @@
 #include "functions.h"
 
 string CardType(vector<int> number) {
-    string str = WholeNum(number);
+    string str = WholeNum(number);                                              //turns the vector into a string using the WholeNum() function
     if ((str.substr(0, 2) == "34" || str.substr(0, 2) == "37") && str.size() == 15) {
-        return "AMERICAN EXPRESS";
-    } else if ((str.substr(0, 4) == "6011" || (str.substr(0, 4) >= "622126" && str.substr(0, 4) <= "622925") || (str.substr(0, 3) >= "644" && str.substr(0, 3) <= "649") || str.substr(0, 2) == "65") && str.size() == 16) {
+        return "AMERICAN EXPRESS";                                              //determines which prefix fits the card number
+    } else if ((str.substr(0, 4) == "6011" || (str.substr(0, 6) >= "622126" && str.substr(0, 6) <= "622925") || (str.substr(0, 3) >= "644" && str.substr(0, 3) <= "649") || str.substr(0, 2) == "65") && str.size() == 16) {
         return "DISCOVER";
     } else if ((str.substr(0, 2) >= "51" && str.substr(0, 2) <= "55") && number.size() == 16) {
         return "MASTERCARD";
     } else if (str.at(0) == '4' && (str.size() >= 13 && str.size() <= 16)) {
         return "VISA";
     } else {
-        return "UNKNOWN CARD TYPE";
+        return "UNKNOWN CARD TYPE";                                             //returns unknown if prefix not recognized
     }
     
 }
 
 string PassLuhn(vector<int> number) {
     bool pass = false;                                                          //function will return false unless number passes Luhn's algorithm
-    int sum = 0;                                                                    //stores sum of numbers in account number
+    int sum = 0;                                                                //stores sum of numbers in account number
     int x;                                                                      //stores calculated check digit to check against actual check digit
     int i;                                                                      //initialized for loops
     
@@ -42,16 +42,16 @@ string PassLuhn(vector<int> number) {
     }
     
     if (pass == true) {                                                         //returns "Accepted" if Luhn's passes and "Declined" otherwise
-        return "ACCEPTED";
+        return "PASS";
     } else {
-        return "DECLINED";
+        return "FAIL";
     }
 }
 
 string WholeNum(vector<int> number) {
-    stringstream whole;
+    stringstream whole;                                                         //initializes stringstream for digits to be added to
     for (int i = 0; i < number.size(); i++) {
         whole << number.at(i);
     }
-    return whole.str();
+    return whole.str();                                                         //returns string of digits as one string
 }

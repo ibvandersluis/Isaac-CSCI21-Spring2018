@@ -1,12 +1,12 @@
 CREDIT CARD NUMBER  |TYPE                |RESULT              
 --------------------|--------------------|-------------------- 
-378282246310005     |AMERICAN EXPRESS    |ACCEPTED             
-371449635398431     |AMERICAN EXPRESS    |ACCEPTED             
-378734493671000     |AMERICAN EXPRESS    |ACCEPTED             
-6011111111111117    |DISCOVER            |ACCEPTED             
-6011000990139424    |DISCOVER            |ACCEPTED             
-5555555555554444    |MASTERCARD          |ACCEPTED             
-5105105105105100    |MASTERCARD          |ACCEPTED             
-4111111111111111    |VISA                |ACCEPTED             
-4012888888881881    |VISA                |ACCEPTED             
-4222222222222       |VISA                |ACCEPTED             
+378282246310005     |AMERICAN EXPRESS    |PASS                 
+371449635398431     |AMERICAN EXPRESS    |PASS                 
+378734493671000     |AMERICAN EXPRESS    |PASS                 
+6011111111111117    |DISCOVER            |PASS                 
+6011000990139424    |DISCOVER            |PASS                 
+5555555555554444    |MASTERCARD          |PASS                 
+5105105105105100    |MASTERCARD          |PASS                 
+4111111111111111    |VISA                |PASS                 
+4012888888881881    |VISA                |PASS                 
+4222222222222       |VISA                |PASS                 
