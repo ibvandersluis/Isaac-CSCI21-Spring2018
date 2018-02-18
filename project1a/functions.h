@@ -33,7 +33,7 @@ string CardType(vector<int> number);
     uses this information to determine which type of credit card it is. If it
     doesn't fit any of the if statements, returns unknown.
     Input: one integer vector representing the credit card number
-    Output: one string stating the card type or unknown. */
+    Output: one string stating the card type or unknown */
     
 string PassLuhn(vector<int> number);
 /*  This function takes a credit card number, represented as an integer array,
