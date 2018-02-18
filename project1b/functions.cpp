@@ -1,10 +1,20 @@
+#include "functions.h"
+
 //////////// CREDIT CARD CLASS ////////////
 
 CreditCard::CreditCard() {
+    cardnum_ = "0000000000000000";
+    firstname_ = "firstname";
+    lastname_ = "lastname";
+    cardtype_ = "cardtype";
+    balance_ = -1.0;
+    creditlim_ = 0.0;
+    overdraft_ = 0.0;
     
+    return;
 }
 
-void CreditCard::SetCardnum(int number) {
+void CreditCard::SetCardnum(string number) {
     cardnum_ = number;
     
     return;
@@ -46,7 +56,13 @@ void CreditCard::SetOverdraft(double ovr) {
     return;
 }
 
-int CreditCard::GetCardnum() const {
+void CreditCard::SetRebate(double rebate) {
+    rebate_ = rebate;
+    
+    return;
+}
+
+string CreditCard::GetCardnum() const {
     return cardnum_;
 }
 
@@ -72,6 +88,10 @@ double CreditCard::GetCreditlim() const {
 
 double CreditCard::GetOverdraft() const {
     return overdraft_;
+}
+
+double CreditCard::GetRebate() const {
+    return rebate_;
 }
 
 string CreditCard::PassLuhn(vector<int> number) const {
@@ -109,17 +129,83 @@ string CreditCard::PassLuhn(vector<int> number) const {
 //////////// GOLD CARD CLASS ////////////
 
 GoldCard::GoldCard() {
+    cardnum_ = "0000000000000000";
+    firstname_ = "firstname";
+    lastname_ = "lastname";
+    cardtype_ = "Gold";
+    balance_ = -1.0;
+    creditlim_ = 3000.00;
+    overdraft_ = 0.0;
+    rebate_ = 0.01;
     
+    return;
+}
+
+GoldCard::GoldCard(string cardnum, string fname, string lname, double bal) {
+    cardnum_ = cardnum;
+    firstname_ = fname;
+    lastname_ = lname;
+    cardtype_ = "Gold";
+    balance_ = bal;
+    creditlim_ = 3000.00;
+    overdraft_ = 0.0;
+    rebate_ = 0.01;
+    
+    return;
 }
 
 //////////// PLATINUM CARD CLASS ////////////
 
 PlatinumCard::PlatinumCard() {
+    cardnum_ = "0000000000000000";
+    firstname_ = "firstname";
+    lastname_ = "lastname";
+    cardtype_ = "Platinum";
+    balance_ = -1.0;
+    creditlim_ = 5000.00;
+    overdraft_ = 1000.00;
+    rebate_ = 0.02;
     
+    return;
+}
+
+PlatinumCard::PlatinumCard(string cardnum, string fname, string lname, double bal) {
+    cardnum_ = cardnum;
+    firstname_ = fname;
+    lastname_ = lname;
+    cardtype_ = "Platinum";
+    balance_ = bal;
+    creditlim_ = 5000.00;
+    overdraft_ = 1000.00;
+    rebate_ = 0.02;
+    
+    return;
 }
 
 //////////// CORPORATE CARD CLASS ////////////
 
 CorporateCard::CorporateCard() {
+    cardnum_ = "0000000000000000";
+    firstname_ = "firstname";
+    lastname_ = "lastname";
+    cardtype_ = "Corporate";
+    balance_ = -1.0;
+    creditlim_ = 10000.00;
+    overdraft_ = 5000.00;
+    rebate_ = 0.05;
     
+    return;
+}
+
+CorporateCard::CorporateCard(string cardnum, string fname, string lname, double bal) {
+    cardnum_ = cardnum;
+    firstname_ = fname;
+    lastname_ = lname;
+    cardtype_ = "Corporate";
+    balance_ = bal;
+    creditlim_ = 10000.00;
+    overdraft_ = 5000.00;
+    rebate_ = 0.05;
+    
+    return;
 }

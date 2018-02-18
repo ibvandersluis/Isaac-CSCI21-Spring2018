@@ -52,48 +52,54 @@ class CreditCard {
     public:
         CreditCard();                                                           //constructor
         
-        void SetCardnum(int number);                                            //mutator
+        void SetCardnum(string number);                                         //mutator
         void SetFirstname(string name);                                         //mutator
         void SetLastname(string name);                                          //mutator
         void SetCardtype(string type);                                          //mutator
         void SetBalance(double bal);                                            //mutator
         void SetCreditlim(double lim);                                          //mutator
-        void SetOverdraft(double ovr);
+        void SetOverdraft(double ovr);                                          //mutator
+        void SetRebate(double rebate);                                          //mutator
         
-        int GetCardnum() const;                                                 //accessor
+        string GetCardnum() const;                                              //accessor
         string GetFirstname() const;                                            //accessor
         string GetLastname() const;                                             //accessor
         string GetCardtype() const;                                             //accessor
         double GetBalance() const;                                              //accessor
         double GetCreditlim() const;                                            //accessor
         double GetOverdraft() const;                                            //accessor
+        double GetRebate() const;
         
         string PassLuhn(vector<int> number) const;                              //determines if card passes Luhn's algorithm
     protected:
-        int cardnum_;                                                           //stores credit card's number
+        string cardnum_;                                                        //stores credit card's number
         string firstname_;                                                      //stores card holder's first name
         string lastname_;                                                       //stores card holder's last name
         string cardtype_;                                                       //stores card type
         double balance_;                                                        //stores balance
         double creditlim_;                                                      //stores credit limit
         double overdraft_;                                                      //stores amount of overdraft permitted to card holder
+        double rebate_;
 };
 
 class GoldCard : public CreditCard {
     public:
         GoldCard();                                                             //constructor
+        GoldCard(string cardnum, string fname, string lname, double bal);       //secondary constructor
     private:
 };
 
 class PlatinumCard : public CreditCard {
     public:
         PlatinumCard();                                                         //constructor
+        PlatinumCard(string cardnum, string fname, string lname, double bal);   //secondary constructor
     private:
 };
 
 class CorporateCard : public CreditCard {
     public:
         CorporateCard();                                                        //constructor
+        CorporateCard(string cardnum, string fname, string lname, double bal);  //secondary constructor
     private:
 };
     

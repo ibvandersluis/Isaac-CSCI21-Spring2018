@@ -14,7 +14,7 @@ int main() {
     cout << "Enter file name for import: ";                                     //prompts user for import file
     cin >> filename;
     
-    inFS.open("ccards.txt");                                                    //opens the file specified by user
+    inFS.open(filename.c_str());                                                //opens the file specified by user
     if (!inFS.is_open()) {                                                      //prints error if file won't open
         cout << "Could not open file " << filename << endl;
         return 1;
