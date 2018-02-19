@@ -20,33 +20,33 @@ FoodItem::FoodItem(string name, unsigned int val, unsigned int cal, string unit,
     return;
 }
 
-void FoodItem::SetCalories(unsigned int cal) {
+void FoodItem::set_calories(unsigned int cal) {
     calories_ = cal;
     
     return;
 }
 
-void FoodItem::SetUnit(string unit) {
+void FoodItem::set_unit_of_measure(string unit) {
     unit_of_measure_ = unit;
     
     return;
 }
 
-void FoodItem::SetUnits(double units) {
+void FoodItem::set_units(double units) {
     units_ = units;
     
     return;
 }
 
-unsigned int FoodItem::GetCalories() const {
+unsigned int FoodItem::calories() const {
     return calories_;
 }
 
-string FoodItem::GetUnit() const {
+string FoodItem::unit_of_measure() const {
     return unit_of_measure_;
 }
 
-double FoodItem::GetUnits() const {
+double FoodItem::units() const {
     return units_;
 }
 

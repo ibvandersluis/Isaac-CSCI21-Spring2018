@@ -5,17 +5,17 @@
 
 class FoodItem : public Item {
     public:
-        FoodItem();
+        FoodItem();                                                             // Default constructor
         FoodItem(string name, unsigned int val, unsigned int cal, string unit, double units);
         virtual ~FoodItem();                                                    // Constructor and destructor
         
-        void SetCalories(unsigned int cal);                                     // Mutator
-        void SetUnit(string unit);                                              // Mutator
-        void SetUnits(double units);                                            // Mutator
+        void set_calories(unsigned int cal);                                    // Mutator
+        void set_unit_of_measure(string unit);                                  // Mutator
+        void set_units(double units);                                           // Mutator
         
-        unsigned int GetCalories() const;                                       // Accessor
-        string GetUnit() const;                                                 // Accessor
-        double GetUnits() const;                                                // Accessor
+        unsigned int calories() const;                                          // Accessor
+        string unit_of_measure() const;                                         // Accessor
+        double units() const;                                                   // Accessor
         
         string ToString() const;                                                // Returns name_, value_, calories_, unit_of_measure_, and units_ in a string
     private:

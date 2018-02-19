@@ -14,23 +14,23 @@ Item::Item(string name, unsigned int val) {
     return;
 }
 
-void Item::name(string name) {
+void Item::set_name(string name) {
     name_ = name;
     
     return;
 }
 
-void Item::value(unsigned int val) {
+void Item::set_value(unsigned int val) {
     value_ = val;
     
     return;
 }
 
-string Item::GetName() const {
+string Item::name() const {
     return name_;
 }
 
-unsigned int Item::GetValue() const {
+unsigned int Item::value() const {
     return value_;
 }
 

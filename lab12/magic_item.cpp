@@ -18,23 +18,23 @@ MagicItem::MagicItem(string name, unsigned int val, string entry, unsigned int m
     return;
 }
 
-void MagicItem::SetDescription(string entry) {
+void MagicItem::set_description(string entry) {
     description_ = entry;
     
     return;
 }
 
-void MagicItem::SetMana(unsigned int mana) {
+void MagicItem::set_mana_required(unsigned int mana) {
     mana_required_ = mana;
     
     return;
 }
 
-string MagicItem::GetDescription() const {
+string MagicItem::description() const {
     return description_;
 }
 
-unsigned int MagicItem::GetMana() const {
+unsigned int MagicItem::mana_required() const {
     return mana_required_;
 }
 
