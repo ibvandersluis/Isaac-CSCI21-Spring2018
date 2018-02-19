@@ -15,6 +15,10 @@ int main() {
     vector<GoldCard>        goldcards;                                          //vector for storing GoldCard objects
     vector<PlatinumCard>    platinumcards;                                      //vector for storing PlatinumCard objects
     vector<CorporateCard>   corporatecards;                                     //vector for storing CorporateCard objects
+    int                     goldcount = 0;                                      //int for counting number of objects to store in goldcards vector
+    int                     platcount = 0;                                      //int for counting number of objects to store in platinumcards vector
+    int                     corpcount = 0;                                      //int for counting number of objects to store in corporatecards vector
+    string                  the_void;                                           //char variable for sucking up filler and ejecting it into space
     
     cout << "Enter file name to import credit card info: ";                     //prompt user for first file to import
     cin >> filename;                                                            //get filename
@@ -25,13 +29,31 @@ int main() {
         return 1;
     }
     
-    while (!inFS.eof()) {
+    while (!inFS.eof()) {                                                       //iterates through file and counts number of gold, platinum, and corporate cards
         inFS >> cardnum;
         inFS >> firstname;
         inFS >> lastname;
         inFS >> cardtype;
+        inFS >> the_void;
         inFS >> balance;
+        
+        if (cardtype == "Gold" || cardtype == "gold") {
+            goldcount++;
+            goldcards.resize(goldcount, GoldCard card(cardnum, firstname, lastname, balance));
+        } else if (cardtype == "Platinum" || cardtype == "platinum") {
+            platcount++;
+            platinumcards.resize(platcount, PlatinumCard card(cardnum, firstname, lastname, balance));
+        } else if (cardtype == "Corporate" || cardtype == "corporate") {
+            corpcount++;
+            corporatecards.resize(corpcount, CorporateCard card(cardnum, firstname, lastname, balance));
+        }
     }
+    
+    inFS.close();
+    
+    //////////////FINAL LINES -- PUSH TO END///////////////
+    inFS.close();
+    outFS.close();
     
     return 0;
 }
