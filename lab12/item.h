@@ -11,22 +11,25 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
+using namespace std;
 
 class Item {
     public:
-        Item(string name, unsigned int val);                                    // Constructor
+        Item();                                                                 // Default constructor
+        Item(string name, unsigned int val);                                    // Secondary constructor
         virtual ~Item();                                                        // Destructor
         
-        void SetName(string name);                                              // Mutator
-        void SetValue(unsigned int val);                                        // Mutator
+        void name(string name);                                                 // Mutator
+        void value(unsigned int val);                                           // Mutator
         
         string GetName() const;                                                 // Accessor
         unsigned int GetValue() const;                                          // Accessor
         
         string ToString() const;                                                // Returns name_ and value_ in a string
     private:
-        string name_;                                                           // Holds name of item
-        unsigned int value_;                                                    // Holds value of item
+        string name;                                                           // Holds name of item
+        unsigned int value;                                                    // Holds value of item
 };
 
 #endif

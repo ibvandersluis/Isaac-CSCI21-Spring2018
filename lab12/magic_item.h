@@ -5,8 +5,9 @@
 
 class MagicItem : public Item {
     public:
+        MagicItem();                                                            // Constructor
         MagicItem(string name, unsigned int val, string entry, unsigned int mana);
-        virtual ~MagicItem();                                                   // Constructor and destructor
+        virtual ~MagicItem();                                                   // Secondary constructor and destructor
         
         void SetDescription(string entry);                                      // Mutator
         void SetMana(unsigned int mana);                                        // Mutator

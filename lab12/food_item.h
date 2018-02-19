@@ -5,6 +5,7 @@
 
 class FoodItem : public Item {
     public:
+        FoodItem();
         FoodItem(string name, unsigned int val, unsigned int cal, string unit, double units);
         virtual ~FoodItem();                                                    // Constructor and destructor
         

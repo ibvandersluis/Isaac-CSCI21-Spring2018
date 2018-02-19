@@ -1,5 +1,5 @@
 /*
- * Name        : lab_10_unit_test.cpp
+ * Name        : lab12_unit_test.cpp
  * Author      : Luke Sathrum
  * Description : Unit test to test Lab #26 Functionality
  */
