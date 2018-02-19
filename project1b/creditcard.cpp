@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "creditcard.h"
 
 //////////// CREDIT CARD CLASS ////////////
 

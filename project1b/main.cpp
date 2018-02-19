@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "creditcard.h"
 
 int main() {
     ifstream                inFS;                                               //ifstream var for opening input file and reading data from it
