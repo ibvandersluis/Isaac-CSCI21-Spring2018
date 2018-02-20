@@ -1,5 +1,5 @@
-#ifndef food_item_h
-#define food_item_h
+#ifndef magic_item_h
+#define magic_item_h
 
 #include "item.h"
 

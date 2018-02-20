@@ -18,6 +18,8 @@ MagicItem::MagicItem(string name, unsigned int val, string entry, unsigned int m
     return;
 }
 
+MagicItem::~MagicItem() {}
+
 void MagicItem::set_description(string entry) {
     description_ = entry;
     
@@ -40,5 +42,7 @@ unsigned int MagicItem::mana_required() const {
 
 string MagicItem::ToString() const {
     stringstream SS;
-    SS << name_ << ", $" << value_ << ", " << description_ << ", requires " << mana_required_ << " mana"; 
+    SS << name_ << ", $" << value_ << ", " << description_ << ", requires " << mana_required_ << " mana";
+    
+    return SS.str();
 }

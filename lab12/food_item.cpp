@@ -20,6 +20,8 @@ FoodItem::FoodItem(string name, unsigned int val, unsigned int cal, string unit,
     return;
 }
 
+FoodItem::~FoodItem() {}
+
 void FoodItem::set_calories(unsigned int cal) {
     calories_ = cal;
     
@@ -52,7 +54,8 @@ double FoodItem::units() const {
 
 string FoodItem::ToString() const {
     stringstream SS;
-    SS << name_ << ", $" << value_ << ", " << units_ << unit_of_measure_ << ", " << calories_;
+    SS << fixed << setprecision(2);
+    SS << name_ << ", $" << value_ << ", " << units_ << " " << unit_of_measure_ << ", " << calories_ << " calories";
     
     return SS.str();
 }

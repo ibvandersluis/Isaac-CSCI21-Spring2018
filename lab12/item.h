@@ -12,7 +12,10 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
+#include <ios>
 using namespace std;
+using std::setprecision;
 
 class Item {
     public:
@@ -27,7 +30,7 @@ class Item {
         unsigned int value() const;                                              // Accessor
         
         string ToString() const;                                                // Returns name_ and value_ in a string
-    private:
+    protected:
         string name_;                                                           // Holds name of item
         unsigned int value_;                                                    // Holds value of item
 };

@@ -14,6 +14,8 @@ Item::Item(string name, unsigned int val) {
     return;
 }
 
+Item::~Item() {}
+
 void Item::set_name(string name) {
     name_ = name;
     
@@ -34,7 +36,7 @@ unsigned int Item::value() const {
     return value_;
 }
 
-string ToString() const {
+string Item::ToString() const {
     stringstream SS;
     SS << name_ << ", $" << value_;
     
