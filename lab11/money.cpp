@@ -84,5 +84,14 @@ const Money operator -(const Money &amount) {
 }
 
 ostream& operator <<(ostream &out, const Money &amount) {
+    // Empty string to store negative sign if amount is negative
+    string neg = "";
+    // If either member variable is negative, set string to "-"
+    if ((amount.dollars_ < 0) || (amount.cents_ < 0)) {
+        neg = "-";
+    }
+    // Format output
+    out << "$" << neg << abs(amount.dollars_) << "." << setw(2) << setfill('0') << abs(amount.cents_);
     
+    return out;
 }
