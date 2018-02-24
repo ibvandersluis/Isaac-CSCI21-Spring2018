@@ -10,6 +10,7 @@ CreditCard::CreditCard() {
     balance_ = -1.0;
     creditlim_ = 0.0;
     overdraft_ = 0.0;
+    rebate_ = 0.0;
     
     return;
 }
@@ -208,4 +209,80 @@ CorporateCard::CorporateCard(string cardnum, string fname, string lname, double 
     rebate_ = 0.05;
     
     return;
+}
+
+//////////// TRANSACTION CLASS ////////////
+
+Transaction::Transaction() {
+    cardnum_ = "0000000000000000";
+    firstname_ = "firstname";
+    lastname_ = "lastname";
+    cardtype_ = "cardtype";
+    balance_ = -1.0;
+    creditlim_ = 0.00;
+    overdraft_ = 0.00;
+    rebate_ = 0.00;
+    date_ = "nodate";
+    transaction_ = "notransaction";
+    vendor_ = "novendor";
+    amount_ = 0.00;
+    
+    return;
+}
+
+Transaction::Transaction(string cardnum, string fname, string lname, string type, double bal, double lim, double ovd, double rebate, string date, string trans, string vend, double amt) {
+    cardnum_ = cardnum;
+    firstname_ = fname;
+    lastname_ = lname;
+    cardtype_ = type;
+    balance_ = bal;
+    creditlim_ = lim;
+    overdraft_ = ovd;
+    rebate_ = rebate;
+    date_ = date;
+    transaction_ = trans;
+    vendor_ = vend;
+    amount_ = amt;
+    
+    return;
+}
+
+void Transaction::SetDate(string date) {
+    date_ = date;
+    
+    return;
+}
+
+void Transaction::SetTransaction(string num) {
+    transaction_ = num;
+    
+    return;
+}
+
+void Transaction::SetVendor(string vendor) {
+    vendor_ = vendor;
+    
+    return;
+}
+
+void Transaction::SetAmount(double amount) {
+    amount_ = amount;
+    
+    return;
+}
+
+string Transaction::GetDate() const {
+    return date_;
+}
+
+string Transaction::GetTransaction() const {
+    return transaction_;
+}
+
+string Transaction::GetVendor() const {
+    return vendor_;
+}
+
+double Transaction::GetAmount() const {
+    return amount_;
 }

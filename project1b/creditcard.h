@@ -42,6 +42,7 @@
 #include <ios>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
 using namespace std;
 using std::fixed;
 using std::setprecision;
@@ -79,7 +80,7 @@ class CreditCard {
         double balance_;                                                        //stores balance
         double creditlim_;                                                      //stores credit limit
         double overdraft_;                                                      //stores amount of overdraft permitted to card holder
-        double rebate_;
+        double rebate_;                                                         //stores the percent rebate given to the card holder each month
 };
 
 class GoldCard : public CreditCard {
@@ -101,6 +102,27 @@ class CorporateCard : public CreditCard {
         CorporateCard();                                                        //constructor
         CorporateCard(string cardnum, string fname, string lname, double bal);  //secondary constructor
     private:
+};
+
+class Transaction : public CreditCard {
+    public:
+        Transaction();                                                          //constructor and secondary constructor
+        Transaction(string cardnum, string fname, string lname, string type, double bal, double lim, double ovd, double rebate, string date, string trans, string vend, double amt);                                                          //secondary constructor
+        
+        void SetDate(string date);                                              //mutator
+        void SetTransaction(string num);                                        //mutator
+        void SetVendor(string vendor);                                          //mutator
+        void SetAmount(double amount);                                          //mutator
+        
+        string GetDate() const;                                                 //accessor
+        string GetTransaction() const;                                          //accessor
+        string GetVendor() const;                                               //accessor
+        double GetAmount() const;                                               //accessor
+    private:
+        string date_;                                                           //stores transaction date
+        string transaction_;                                                    //stores transaction number
+        string vendor_;                                                         //stores transaction vendor
+        double amount_;                                                         //stores transaction amount
 };
     
 #endif
