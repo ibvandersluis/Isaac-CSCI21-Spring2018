@@ -95,12 +95,18 @@ double CreditCard::GetRebate() const {
     return rebate_;
 }
 
-string CreditCard::PassLuhn(vector<int> number) const {
+string CreditCard::PassLuhn() const {
+    vector<int> number;
+    stringstream ccnumSS(cardnum_);
     bool pass = false;                                                          //function will return false unless number passes Luhn's algorithm
     int sum = 0;                                                                //stores sum of numbers in account number
     int x;                                                                      //stores calculated check digit to check against actual check digit
     int i;                                                                      //initialized for loops
     
+    while (!isspace(ccnumSS.peek())){                                           //so long as digit isn't a space,
+        ccnumSS >> digit;                                                       //reads in one digit from the stringstream
+        cardnum.push_back(digit - 48);                                          //pushes digit - 48 (for ascii difference) onto vector
+    }
     
     for (i = number.size() - 2; i >= 0; i -= 2) {
         number.at(i) *= 2;                                                      //doubles every other number, starting with the first number left of the check digit and excluding the prefix

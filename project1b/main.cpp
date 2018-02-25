@@ -9,6 +9,7 @@ int main() {
     string                  lastname;                                           //string var for storing card holder's last name
     string                  cardtype;                                           //string var for storing card's type (Gold/Platinum/Corporate)
     string                  transaction;                                        //string var for storing transaction line
+    string                  reason;                                             //string var for storing reason a card is declined
     double                  balance;                                            //double var for storing card's current balance
     double                  creditlim;                                          //double var for storing card's credit limit
     double                  overdraft;                                          //double var for storing overdraft limit
@@ -92,7 +93,7 @@ int main() {
         SS >> vendor;
         SS >> amount;
         
-        while (found == false) {
+        while (found == false) {                                                //iterates through each vector searching for account info until it is found
             for (int i = 0; i < goldcards.size(); i++) {
                 if (goldcards.at(i).GetCardnum() == cardnum) {
                     found = true;
@@ -130,13 +131,26 @@ int main() {
                 }
             }
         }
-        cout << "Got this far" << endl;
-        cout << "j: " << j << endl;
         transactionlist.push_back(Transaction(cardnum, firstname, lastname, cardtype, balance, creditlim, overdraft, rebate, date, transaction, vendor, amount));
-    
     }
     
-    ////////////// FINAL LINES -- PUSH TO END///////////////
+    outFS.open("report.txt");
+    
+    outFS << "*****************************************************************" << endl;
+    outFS << "                      DECLINED TRANSACTIONS" << endl;
+    outFS << "*****************************************************************" << endl;
+    
+    for (int i = 0; i < transactionlist.size(); i++) {
+        bool evaluated = false;
+        while (evaluated == false) {
+            if (transactionlist.at(i).PassLuhn() == false) {
+                evaluated = true;
+                reason = "FAILED LUHN'S";
+            }
+        }
+    }
+    
+    ////////////// FINAL LINES -- PUSH TO END ///////////////
     inFS.close();
     outFS.close();
     
