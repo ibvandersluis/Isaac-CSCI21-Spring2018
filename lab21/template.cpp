@@ -1,6 +1,6 @@
 /*
  * Name        : template.cpp
- * Author      : FILL IN
+ * Author      : Isaac Vander Sluis
  * Description : Various functions using templates. Please note you can just
  *               write the definitions in here. No need for prototypes.
  */
@@ -24,6 +24,20 @@ using std::stringstream;
  * @return string - A string containing the contents of values separated by the
  *                  specified separator character
  */
+ 
+ template<typename T>
+ string PrepareForDisplay(T values[], unsigned int size, char separator = ',') {
+    stringstream SS;
+    for (int i = 0; i < size; i++) {
+        if (i == size - 1) {
+            SS << values[i];
+        } else {
+            SS << values[i] << separator;
+        }
+    }
+    
+    return SS.str();
+ }
 
 
 /*
@@ -35,6 +49,17 @@ using std::stringstream;
  * @return bool - true if value is found in the array, otherwise false
  */
 
+template<typename T>
+bool HasValue(T values[], unsigned int size, T value_to_find) {
+    bool found = false;
+    for (int i = 0; i < size; i++) {
+        if (values[i] == value_to_find) {
+            found = true;
+        }
+    }
+    
+    return found;
+}
 
 /*
  * Function Name: ValueAt
@@ -50,6 +75,17 @@ using std::stringstream;
  *               the type and sets error to true. To get a zero representation
  *               you can return T()
  */
+ 
+ template<typename T>
+ T ValueAt(T values[], unsigned int size, unsigned int index, bool &error) {
+    if (index >= size) {
+        error = true;
+        return T();
+    } else {
+        error = false;
+        return values[index];
+    }
+ }
 
 
 /*
@@ -61,6 +97,14 @@ using std::stringstream;
  * @return T - The sum of the values in the array
  */
 
+template<typename T>
+T Sum(T values[], unsigned int size) {
+    T sum = T();
+    for (int i = 0; i < size; i++) {
+        sum += values[i];
+    }
+    return sum;
+}
 
 /*
  * Function Name: SwapValues
@@ -72,3 +116,16 @@ using std::stringstream;
  * @param unsigned int index2 - The position of the second value to be swapped
  * @return bool - true if the swap was successful, otherwise false
  */
+
+template<typename T>
+bool SwapValues(T values[], unsigned int size, unsigned int index1, unsigned int index2) {
+    bool success = false;
+    T val1 = values[index1];
+    T val2 = values[index2];
+    values[index1] = values[index2];
+    values[index2] = val1;
+    if (values[index1] == val2 && values[index2] == val1) {
+        success = true;
+    }
+    return success;
+}
