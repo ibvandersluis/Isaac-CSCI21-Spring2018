@@ -71,7 +71,7 @@ class CreditCard {
         double  GetOverdraft() const;                                           //accessor
         double  GetRebate() const;
         
-        string  PassLuhn() const;                                               //determines if card passes Luhn's algorithm
+        bool    PassLuhn() const;                                               //determines if card passes Luhn's algorithm
     protected:
         string  cardnum_;                                                       //stores credit card's number
         string  firstname_;                                                     //stores card holder's first name

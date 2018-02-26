@@ -153,7 +153,7 @@ int main() {
     }
     
     for (int i = 0; (i < transactionlist.size() && no_decline == false); i++) {
-        if (transactionlist.at(i).GetEval == true) {
+        if (transactionlist.at(i).GetEval() == true) {
             no_decline == true;
         }
     }
@@ -177,15 +177,15 @@ int main() {
             for (int i = 0; i < transactionlist.size(); i++) {
                 if (cardnum == transactionlist.at(i).GetCardnum() && transactionlist.at(i).GetEval() == false) {
                     transactionlist.at(i).SetEval(true);
-                    outFS << "    Transaction: " << transactionlist.at(i).GetTransaction() << ", Vendor: " << transactionlist.at(i).GetVendor() << ", Amount: " << transactionlist.at(i).GetAmount << endl;
-                    total += transactionlist.at(i).GetAmount;
+                    outFS << "    Transaction: " << transactionlist.at(i).GetTransaction() << ", Vendor: " << transactionlist.at(i).GetVendor() << ", Amount: " << transactionlist.at(i).GetAmount() << endl;
+                    total += transactionlist.at(i).GetAmount();
                 }
             }
             outFS << "TOTAL SPENT: $" << total << endl;
             outFS << "CURRENT BALANCE: $" << transactionlist.at(i).GetBalance() + total << endl;
             outFS << "REBATE FOR THIS MONTH: $" << total * transactionlist.at(i).GetRebate() << endl;
             if ((transactionlist.at(i).GetBalance() + total) > transactionlist.at(i).GetCreditlim()) {
-                outFS << "      !!! WARNING !!!" << endl
+                outFS << "      !!! WARNING !!!" << endl;
                 outFS << "YOUR ACCOUNT IS OVERDRAFTED" << endl;
             }
         }

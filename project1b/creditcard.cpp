@@ -95,7 +95,7 @@ double CreditCard::GetRebate() const {
     return rebate_;
 }
 
-string CreditCard::PassLuhn() const {
+bool CreditCard::PassLuhn() const {
     vector<int> number;
     char digit;
     stringstream ccnumSS(cardnum_);
@@ -127,11 +127,7 @@ string CreditCard::PassLuhn() const {
         pass = true;
     }
     
-    if (pass == true) {                                                         //returns "Accepted" if Luhn's passes and "Declined" otherwise
-        return "PASS";
-    } else {
-        return "FAIL";
-    }
+    return pass;
 }
 
 //////////// GOLD CARD CLASS ////////////
