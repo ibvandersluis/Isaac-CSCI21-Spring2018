@@ -141,17 +141,25 @@ int main() {
     outFS << "*****************************************************************" << endl;
     
     for (int i = 0; i < transactionlist.size(); i++) {
-        bool evaluated = false;
-        while (evaluated == false) {
-            if (transactionlist.at(i).PassLuhn() == false) {
-                evaluated = true;
-                reason = "FAILED LUHN'S";
-            }
+        if (transactionlist.at(i).PassLuhn() == false) {
+            reason = "FAILED LUHN'S";
+        } else if (transactionlist.at(i).GetBalance() + transactionlist.at(i).GetAmount() >= transactionlist.at(i).GetCreditlim() + transactionlist.at(i).GetOverdraft()) {
+            reason = "CREDIT LIMIT REACHED";
         }
+        
+        outFS << "TRANSACTION #: " << transactionlist.at(i).GetTransaction() << "   REASON: " << reason << endl;
+    }
+    
+    outFS << endl << endl;
+    outFS << "*****************************************************************" << endl;
+    outFS << "                      APPROVED TRANSACTIONS" << endl;
+    outFS << "*****************************************************************" << endl;
+    
+    for (int i = 0; i < transactionlist.size(); i++) {
+        
     }
     
     ////////////// FINAL LINES -- PUSH TO END ///////////////
-    inFS.close();
     outFS.close();
     
     return 0;
