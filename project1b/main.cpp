@@ -29,6 +29,7 @@ int main() {
     string                  date;                                               //string var for storing transaction date
     string                  vendor;                                             //string var for storing transaction vendor
     bool                    found = false;                                      //boolean for whether or not a card has been found in the system
+    bool                    no_decline = false;                                 //boolean that is false unless no transactions were declined
     
     cout << "Enter file name to import credit card info: ";                     //prompt user for first file to import
     cin >> filename;                                                            //get filename
@@ -83,8 +84,6 @@ int main() {
     replace(transaction.begin(), transaction.end(), ':', ' ');                  //replaces every colon with a space in transaction
     transaction.pop_back();                                                     //removes last character of string (a space)
     SS << transaction;                                                          //shoves transaction rudely back into a stringstream variable
-    
-    cout << "trancount: " << trancount << endl;
     
     for (int j = 0; j < trancount; j++) {
         found = false;                                                          //resets found to talse
@@ -153,6 +152,16 @@ int main() {
         }
     }
     
+    for (int i = 0; (i < transactionlist.size() && no_decline == false); i++) {
+        if (transactionlist.at(i).GetEval == true) {
+            no_decline == true;
+        }
+    }
+    
+    if (no_decline == true) {
+        outFS << "NO TRANSACTIONS WERE DECLINED" << endl;
+    }
+    
     outFS << endl << endl;
     outFS << "*****************************************************************" << endl;
     outFS << "                      APPROVED TRANSACTIONS" << endl;
@@ -173,6 +182,12 @@ int main() {
                 }
             }
             outFS << "TOTAL SPENT: $" << total << endl;
+            outFS << "CURRENT BALANCE: $" << transactionlist.at(i).GetBalance() + total << endl;
+            outFS << "REBATE FOR THIS MONTH: $" << total * transactionlist.at(i).GetRebate() << endl;
+            if ((transactionlist.at(i).GetBalance() + total) > transactionlist.at(i).GetCreditlim()) {
+                outFS << "      !!! WARNING !!!" << endl
+                outFS << "YOUR ACCOUNT IS OVERDRAFTED" << endl;
+            }
         }
     }
     

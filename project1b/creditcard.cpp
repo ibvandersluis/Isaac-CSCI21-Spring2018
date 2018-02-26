@@ -280,7 +280,7 @@ void Transaction::SetAmount(double amount) {
     return;
 }
 
-void Transaction::GetEval(bool tf) {
+void Transaction::SetEval(bool tf) {
     evaluated_ = tf;
     
     return;
