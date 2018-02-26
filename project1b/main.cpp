@@ -29,7 +29,7 @@ int main() {
     string                  date;                                               //string var for storing transaction date
     string                  vendor;                                             //string var for storing transaction vendor
     bool                    found = false;                                      //boolean for whether or not a card has been found in the system
-    bool                    no_decline = false;                                 //boolean that is false unless no transactions were declined
+    bool                    no_decline = true;                                 //boolean that is false unless no transactions were declined
     
     cout << "Enter file name to import credit card info: ";                     //prompt user for first file to import
     cin >> filename;                                                            //get filename
@@ -130,36 +130,36 @@ int main() {
                     rebate = corporatecards.at(i).GetRebate();
                 }
             }
-        }
+        }                                                                       //appends Transaction object populated with appropriate data to transactionlist vector
         transactionlist.push_back(Transaction(cardnum, firstname, lastname, cardtype, balance, creditlim, overdraft, rebate, date, transaction, vendor, amount));
     }
     
-    outFS.open("report.txt");
+    outFS.open("report.txt");                                                   //opens file to output report data
     
     outFS << "*****************************************************************" << endl;
     outFS << "                      DECLINED TRANSACTIONS" << endl;
     outFS << "*****************************************************************" << endl;
     
-    for (int i = 0; i < transactionlist.size(); i++) {
-        if (transactionlist.at(i).PassLuhn() == false) {
+    for (int i = 0; i < transactionlist.size(); i++) {                          //iterates through transactions
+        if (transactionlist.at(i).PassLuhn() == false) {                        //if cardnum_ fails Luhn's,
             transactionlist.at(i).SetEval(true);
-            reason = "FAILED LUHN'S";
+            reason = "FAILED LUHN'S";                                           //card is declined for stated reason
             outFS << "TRANSACTION #: " << transactionlist.at(i).GetTransaction() << "   REASON: " << reason << endl;
         } else if (transactionlist.at(i).GetBalance() + transactionlist.at(i).GetAmount() >= transactionlist.at(i).GetCreditlim() + transactionlist.at(i).GetOverdraft()) {
-            transactionlist.at(i).SetEval(true);
-            reason = "FUNDS UNAVAILABLE";
+            transactionlist.at(i).SetEval(true);                                //if amount exceeds overdraft allowance,
+            reason = "FUNDS UNAVAILABLE";                                       //card is declined for stated reason
             outFS << "TRANSACTION #: " << transactionlist.at(i).GetTransaction() << "   REASON: " << reason << endl;
         }
     }
     
-    for (int i = 0; (i < transactionlist.size() && no_decline == false); i++) {
-        if (transactionlist.at(i).GetEval() == true) {
-            no_decline == true;
+    for (int i = 0; (i < transactionlist.size() && no_decline == true); i++) {  //iterates through transaction
+        if (transactionlist.at(i).GetEval() == true) {                          //if any transaction have been evaluated
+            no_decline = false;                                                //sets no_decline to false
         }
     }
     
-    if (no_decline == true) {
-        outFS << "NO TRANSACTIONS WERE DECLINED" << endl;
+    if (no_decline == true) {                                                   //if no transactions were declined,
+        outFS << "NO TRANSACTIONS WERE DECLINED" << endl;                       //prints statement
     }
     
     outFS << endl << endl;
@@ -167,16 +167,16 @@ int main() {
     outFS << "                      APPROVED TRANSACTIONS" << endl;
     outFS << "*****************************************************************" << endl;
     
-    for (int i = 0; i < transactionlist.size(); i++) {
-        if (transactionlist.at(i).GetEval() == false) {
-            total = 0.00;
-            cardnum = transactionlist.at(i).GetCardnum();
-            outFS << "-----CARD #: " << cardnum << "-----" << endl;
+    for (int i = 0; i < transactionlist.size(); i++) {                          //iterates through transactions
+        if (transactionlist.at(i).GetEval() == false) {                         //only checks unevaluated transactions
+            total = 0.00;                                                       //resets total to 0.00
+            cardnum = transactionlist.at(i).GetCardnum();                       //assigns cardnum to object's cardnum_ member variable
+            outFS << "-----CARD #: " << cardnum << "-----" << endl;             //prints information
             outFS << "CARDHOLDER: " << transactionlist.at(i).GetLastname() << ", " << transactionlist.at(i).GetFirstname();
             outFS << "TRANSACTIONS: " << endl;
-            for (int i = 0; i < transactionlist.size(); i++) {
+            for (int i = 0; i < transactionlist.size(); i++) {                  //prints each approved transaction associated with the cardnumber
                 if (cardnum == transactionlist.at(i).GetCardnum() && transactionlist.at(i).GetEval() == false) {
-                    transactionlist.at(i).SetEval(true);
+                    transactionlist.at(i).SetEval(true);                        //marks each transaction as evaluated
                     outFS << "    Transaction: " << transactionlist.at(i).GetTransaction() << ", Vendor: " << transactionlist.at(i).GetVendor() << ", Amount: " << transactionlist.at(i).GetAmount() << endl;
                     total += transactionlist.at(i).GetAmount();
                 }
@@ -185,7 +185,7 @@ int main() {
             outFS << "CURRENT BALANCE: $" << transactionlist.at(i).GetBalance() + total << endl;
             outFS << "REBATE FOR THIS MONTH: $" << total * transactionlist.at(i).GetRebate() << endl;
             if ((transactionlist.at(i).GetBalance() + total) > transactionlist.at(i).GetCreditlim()) {
-                outFS << "      !!! WARNING !!!" << endl;
+                outFS << "      !!! WARNING !!!" << endl;                       //prints warning if account has been overdrafted
                 outFS << "YOUR ACCOUNT IS OVERDRAFTED" << endl;
             }
         }
