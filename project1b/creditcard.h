@@ -53,34 +53,34 @@ class CreditCard {
     public:
         CreditCard();                                                           //constructor
         
-        void SetCardnum(string number);                                         //mutator
-        void SetFirstname(string name);                                         //mutator
-        void SetLastname(string name);                                          //mutator
-        void SetCardtype(string type);                                          //mutator
-        void SetBalance(double bal);                                            //mutator
-        void SetCreditlim(double lim);                                          //mutator
-        void SetOverdraft(double ovr);                                          //mutator
-        void SetRebate(double rebate);                                          //mutator
+        void    SetCardnum(string number);                                      //mutator
+        void    SetFirstname(string name);                                      //mutator
+        void    SetLastname(string name);                                       //mutator
+        void    SetCardtype(string type);                                       //mutator
+        void    SetBalance(double bal);                                         //mutator
+        void    SetCreditlim(double lim);                                       //mutator
+        void    SetOverdraft(double ovr);                                       //mutator
+        void    SetRebate(double rebate);                                       //mutator
         
-        string GetCardnum() const;                                              //accessor
-        string GetFirstname() const;                                            //accessor
-        string GetLastname() const;                                             //accessor
-        string GetCardtype() const;                                             //accessor
-        double GetBalance() const;                                              //accessor
-        double GetCreditlim() const;                                            //accessor
-        double GetOverdraft() const;                                            //accessor
-        double GetRebate() const;
+        string  GetCardnum() const;                                             //accessor
+        string  GetFirstname() const;                                           //accessor
+        string  GetLastname() const;                                            //accessor
+        string  GetCardtype() const;                                            //accessor
+        double  GetBalance() const;                                             //accessor
+        double  GetCreditlim() const;                                           //accessor
+        double  GetOverdraft() const;                                           //accessor
+        double  GetRebate() const;
         
-        string PassLuhn() const;                                                //determines if card passes Luhn's algorithm
+        string  PassLuhn() const;                                               //determines if card passes Luhn's algorithm
     protected:
-        string cardnum_;                                                        //stores credit card's number
-        string firstname_;                                                      //stores card holder's first name
-        string lastname_;                                                       //stores card holder's last name
-        string cardtype_;                                                       //stores card type
-        double balance_;                                                        //stores balance
-        double creditlim_;                                                      //stores credit limit
-        double overdraft_;                                                      //stores amount of overdraft permitted to card holder
-        double rebate_;                                                         //stores the percent rebate given to the card holder each month
+        string  cardnum_;                                                       //stores credit card's number
+        string  firstname_;                                                     //stores card holder's first name
+        string  lastname_;                                                      //stores card holder's last name
+        string  cardtype_;                                                      //stores card type
+        double  balance_;                                                       //stores balance
+        double  creditlim_;                                                     //stores credit limit
+        double  overdraft_;                                                     //stores amount of overdraft permitted to card holder
+        double  rebate_;                                                        //stores the percent rebate given to the card holder each month
 };
 
 class GoldCard : public CreditCard {
@@ -109,20 +109,23 @@ class Transaction : public CreditCard {
         Transaction();                                                          //constructor and secondary constructor
         Transaction(string cardnum, string fname, string lname, string type, double bal, double lim, double ovd, double rebate, string date, string trans, string vend, double amt);                                                          //secondary constructor
         
-        void SetDate(string date);                                              //mutator
-        void SetTransaction(string num);                                        //mutator
-        void SetVendor(string vendor);                                          //mutator
-        void SetAmount(double amount);                                          //mutator
+        void    SetDate(string date);                                           //mutator
+        void    SetTransaction(string num);                                     //mutator
+        void    SetVendor(string vendor);                                       //mutator
+        void    SetAmount(double amount);                                       //mutator
+        void    SetEval(bool tf);                                               //mutator
         
-        string GetDate() const;                                                 //accessor
-        string GetTransaction() const;                                          //accessor
-        string GetVendor() const;                                               //accessor
-        double GetAmount() const;                                               //accessor
+        string  GetDate() const;                                                //accessor
+        string  GetTransaction() const;                                         //accessor
+        string  GetVendor() const;                                              //accessor
+        double  GetAmount() const;                                              //accessor
+        bool    GetEval() const;                                                //accessor
     private:
-        string date_;                                                           //stores transaction date
-        string transaction_;                                                    //stores transaction number
-        string vendor_;                                                         //stores transaction vendor
-        double amount_;                                                         //stores transaction amount
+        string  date_;                                                          //stores transaction date
+        string  transaction_;                                                   //stores transaction number
+        string  vendor_;                                                        //stores transaction vendor
+        double  amount_;                                                        //stores transaction amount
+        bool    evaluated_;                                                     //stores bool value, true if transaction have been evaluated, false otherwise
 };
     
 #endif

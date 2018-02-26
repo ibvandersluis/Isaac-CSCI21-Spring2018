@@ -232,6 +232,7 @@ Transaction::Transaction() {
     transaction_ = "notransaction";
     vendor_ = "novendor";
     amount_ = 0.00;
+    evaluated_ = false;
     
     return;
 }
@@ -249,6 +250,7 @@ Transaction::Transaction(string cardnum, string fname, string lname, string type
     transaction_ = trans;
     vendor_ = vend;
     amount_ = amt;
+    evaluated_ = false;
     
     return;
 }
@@ -277,6 +279,12 @@ void Transaction::SetAmount(double amount) {
     return;
 }
 
+void Transaction::GetEval(bool tf) {
+    evaluated_ = tf;
+    
+    return;
+}
+
 string Transaction::GetDate() const {
     return date_;
 }
@@ -291,4 +299,8 @@ string Transaction::GetVendor() const {
 
 double Transaction::GetAmount() const {
     return amount_;
+}
+
+bool Transaction::GetEval() const {
+    return evaluated_;
 }
