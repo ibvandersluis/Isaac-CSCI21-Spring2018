@@ -14,7 +14,8 @@ int main() {
     double                  creditlim;                                          //double var for storing card's credit limit
     double                  overdraft;                                          //double var for storing overdraft limit
     double                  rebate;                                             //double var for storing rebate percentage
-    double                  amount;                                             //string var for storing transaction amount
+    double                  amount;                                             //double var for storing transaction amount
+    double                  total = 0.00;                                       //double var for storing cardholder's monthly total
     stringstream            SS;                                                 //stringstream for breaking down a cardnumber into digits for Luhn's
     vector<GoldCard>        goldcards;                                          //vector for storing GoldCard objects
     vector<PlatinumCard>    platinumcards;                                      //vector for storing PlatinumCard objects
@@ -142,10 +143,12 @@ int main() {
     
     for (int i = 0; i < transactionlist.size(); i++) {
         if (transactionlist.at(i).PassLuhn() == false) {
+            transactionlist.at(i).SetEval(true);
             reason = "FAILED LUHN'S";
             outFS << "TRANSACTION #: " << transactionlist.at(i).GetTransaction() << "   REASON: " << reason << endl;
         } else if (transactionlist.at(i).GetBalance() + transactionlist.at(i).GetAmount() >= transactionlist.at(i).GetCreditlim() + transactionlist.at(i).GetOverdraft()) {
-            reason = "CREDIT LIMIT REACHED";
+            transactionlist.at(i).SetEval(true);
+            reason = "FUNDS UNAVAILABLE";
             outFS << "TRANSACTION #: " << transactionlist.at(i).GetTransaction() << "   REASON: " << reason << endl;
         }
     }
@@ -157,11 +160,22 @@ int main() {
     
     for (int i = 0; i < transactionlist.size(); i++) {
         if (transactionlist.at(i).GetEval() == false) {
-            
+            total = 0.00;
+            cardnum = transactionlist.at(i).GetCardnum();
+            outFS << "-----CARD #: " << cardnum << "-----" << endl;
+            outFS << "CARDHOLDER: " << transactionlist.at(i).GetLastname() << ", " << transactionlist.at(i).GetFirstname();
+            outFS << "TRANSACTIONS: " << endl;
+            for (int i = 0; i < transactionlist.size(); i++) {
+                if (cardnum == transactionlist.at(i).GetCardnum() && transactionlist.at(i).GetEval() == false) {
+                    transactionlist.at(i).SetEval(true);
+                    outFS << "    Transaction: " << transactionlist.at(i).GetTransaction() << ", Vendor: " << transactionlist.at(i).GetVendor() << ", Amount: " << transactionlist.at(i).GetAmount << endl;
+                    total += transactionlist.at(i).GetAmount;
+                }
+            }
+            outFS << "TOTAL SPENT: $" << total << endl;
         }
     }
     
-    ////////////// FINAL LINES -- PUSH TO END ///////////////
     outFS.close();
     
     return 0;

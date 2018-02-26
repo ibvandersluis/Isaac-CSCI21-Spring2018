@@ -97,6 +97,7 @@ double CreditCard::GetRebate() const {
 
 string CreditCard::PassLuhn() const {
     vector<int> number;
+    char digit;
     stringstream ccnumSS(cardnum_);
     bool pass = false;                                                          //function will return false unless number passes Luhn's algorithm
     int sum = 0;                                                                //stores sum of numbers in account number
@@ -105,7 +106,7 @@ string CreditCard::PassLuhn() const {
     
     while (!isspace(ccnumSS.peek())){                                           //so long as digit isn't a space,
         ccnumSS >> digit;                                                       //reads in one digit from the stringstream
-        cardnum.push_back(digit - 48);                                          //pushes digit - 48 (for ascii difference) onto vector
+        number.push_back(digit - 48);                                           //pushes digit - 48 (for ascii difference) onto vector
     }
     
     for (i = number.size() - 2; i >= 0; i -= 2) {
