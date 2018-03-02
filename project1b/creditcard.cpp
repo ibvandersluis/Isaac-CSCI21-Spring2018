@@ -104,6 +104,7 @@ void CreditCard::SetRebate(double rebate) {
  *  Output  :   String value
  */
 string CreditCard::GetCardnum() const {
+    //cout<<"in class: "<<cardnum_<<endl;
     return cardnum_;
 }
 
@@ -168,19 +169,24 @@ double CreditCard::GetRebate() const {
  *  Output  :   Boolean value
  */
 bool CreditCard::PassLuhn() const {
-    vector<int> number;
-    char digit;
-    stringstream ccnumSS;
+    vector<int> number;                                                         //int vector to store cardnumber digits
+    int digit;                                                                  //int for holding digit to pass to vector
+    long int mul = 1;                                                           //int for holding multiplier for math
+    long int cnumint;                                                           //char to assist in converting string to int
+    stringstream ccnumSS;                                                       //stringstream to assist in converting string to int
     bool pass = false;                                                          //function will return false unless number passes Luhn's algorithm
     int sum = 0;                                                                //stores sum of numbers in account number
     int x;                                                                      //stores calculated check digit to check against actual check digit
     int i;                                                                      //initialized for loops
     
-    ccnumSS << " " << cardnum_;
+    ccnumSS << cardnum_;
     
-    while (!isspace(ccnumSS.peek())){                                           //so long as digit isn't a space,
-        ccnumSS >> digit;                                                       //reads in one digit from the stringstream
-        number.push_back(digit - 48);                                           //pushes digit - 48 (for ascii difference) onto vector
+    ccnumSS >> cnumint;
+    
+    for (int i = 0; i < cardnum_.length(); i++) {                               //for as many characters are in cardnum_
+        digit = (cnumint / mul) % 10;                                           //gets digit
+        number.insert(number.begin() + 0, digit);                               //inserts digit to beginning of vector
+        mul *= 10;
     }
     
     for (i = number.size() - 2; i >= 0; i -= 2) {
@@ -200,7 +206,7 @@ bool CreditCard::PassLuhn() const {
     if (x == number.at(number.size() - 1)) {
         pass = true;
     }
-    
+
     return pass;
 }
 

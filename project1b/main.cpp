@@ -29,7 +29,7 @@ int main() {
     string                  date;                                               //string var for storing transaction date
     string                  vendor;                                             //string var for storing transaction vendor
     bool                    found = false;                                      //boolean for whether or not a card has been found in the system
-    bool                    no_decline = true;                                 //boolean that is false unless no transactions were declined
+    bool                    no_decline = true;                                  //boolean that is false unless no transactions were declined
     
     cout << "Enter file name to import credit card info: ";                     //prompt user for first file to import
     cin >> filename;                                                            //get filename
@@ -79,6 +79,13 @@ int main() {
     
     inFS.close();                                                               //closes inFS
     
+    outFS.open("report.txt");                                                   //opens file to output report data
+    
+                                                                                //declined transactions header
+    outFS << "*****************************************************************" << endl;
+    outFS << "*                     DECLINED TRANSACTIONS                     *" << endl;
+    outFS << "*****************************************************************" << endl;
+    
     transaction = SS.str();                                                     //assigns transaction to the string stored in stringstream
     SS.str("");                                                                 //clears SS
     replace(transaction.begin(), transaction.end(), ':', ' ');                  //replaces every colon with a space in transaction
@@ -94,7 +101,7 @@ int main() {
         SS >> amount;
         
         while (found == false) {                                                //iterates through each vector searching for account info until it is found
-            for (int i = 0; i < goldcards.size(); i++) {
+            for (unsigned int i = 0; i < goldcards.size(); i++) {
                 if (goldcards.at(i).GetCardnum() == cardnum) {
                     found = true;
                     firstname = goldcards.at(i).GetFirstname();
@@ -106,7 +113,7 @@ int main() {
                     rebate = goldcards.at(i).GetRebate();
                 }
             }
-            for (int i = 0; i < platinumcards.size(); i++) {
+            for (unsigned int i = 0; i < platinumcards.size(); i++) {
                 if (platinumcards.at(i).GetCardnum() == cardnum) {
                     found = true;
                     firstname = platinumcards.at(i).GetFirstname();
@@ -118,7 +125,7 @@ int main() {
                     rebate = platinumcards.at(i).GetRebate();
                 }
             }
-            for (int i = 0; i < corporatecards.size(); i++) {
+            for (unsigned int i = 0; i < corporatecards.size(); i++) {
                 if (corporatecards.at(i).GetCardnum() == cardnum) {
                     found = true;
                     firstname = corporatecards.at(i).GetFirstname();
@@ -130,31 +137,33 @@ int main() {
                     rebate = corporatecards.at(i).GetRebate();
                 }
             }
+            if (found == false) {
+                outFS << endl << "CARD #" << cardnum << " DECLINED" << endl;    //lists card number under declined transactions
+                outFS << "                          REASON: NOT IN SYSTEM" << endl;
+                found = true;
+            }
         }                                                                       //appends Transaction object populated with appropriate data to transactionlist vector
         transactionlist.push_back(Transaction(cardnum, firstname, lastname, cardtype, balance, creditlim, overdraft, rebate, date, transaction, vendor, amount));
     }
     
-    outFS.open("report.txt");                                                   //opens file to output report data
-    
-    outFS << "*****************************************************************" << endl;
-    outFS << "                      DECLINED TRANSACTIONS" << endl;
-    outFS << "*****************************************************************" << endl;
-    
-    for (int i = 0; i < transactionlist.size(); i++) {                          //iterates through transactions
+    for (unsigned int i = 0; i < transactionlist.size(); i++) {                          //iterates through transactions
+        
         if (transactionlist.at(i).PassLuhn() == false) {                        //if cardnum_ fails Luhn's,
             transactionlist.at(i).SetEval(true);
             reason = "FAILED LUHN'S";                                           //card is declined for stated reason
-            outFS << "TRANSACTION #: " << transactionlist.at(i).GetTransaction() << "   REASON: " << reason << endl;
+            outFS << endl << "TRANSACTION #" << transactionlist.at(i).GetTransaction() << ", DATE: " << transactionlist.at(i).GetDate() << ", VENDOR: " << transactionlist.at(i).GetVendor() << ", AMOUNTt: $" << transactionlist.at(i).GetAmount() << endl;
+            outFS << "                          REASON: " << reason << endl;
         } else if (transactionlist.at(i).GetBalance() + transactionlist.at(i).GetAmount() >= transactionlist.at(i).GetCreditlim() + transactionlist.at(i).GetOverdraft()) {
             transactionlist.at(i).SetEval(true);                                //if amount exceeds overdraft allowance,
             reason = "FUNDS UNAVAILABLE";                                       //card is declined for stated reason
-            outFS << "TRANSACTION #: " << transactionlist.at(i).GetTransaction() << "   REASON: " << reason << endl;
+            outFS << endl << "TRANSACTION #" << transactionlist.at(i).GetTransaction() << ", DATE: " << transactionlist.at(i).GetDate() << ", VENDOR: " << transactionlist.at(i).GetVendor() << ", AMOUNTt: $" << transactionlist.at(i).GetAmount() << endl;
+            outFS << "                          REASON: " << reason << endl;
         }
     }
     
-    for (int i = 0; (i < transactionlist.size() && no_decline == true); i++) {  //iterates through transaction
+    for (unsigned int i = 0; (i < transactionlist.size() && no_decline == true); i++) {  //iterates through transaction
         if (transactionlist.at(i).GetEval() == true) {                          //if any transaction have been evaluated
-            no_decline = false;                                                //sets no_decline to false
+            no_decline = false;                                                 //sets no_decline to false
         }
     }
     
@@ -162,22 +171,23 @@ int main() {
         outFS << "NO TRANSACTIONS WERE DECLINED" << endl;                       //prints statement
     }
     
-    outFS << endl << endl;
+    outFS << endl << endl;                                                      //approved transactions header
     outFS << "*****************************************************************" << endl;
-    outFS << "                      APPROVED TRANSACTIONS" << endl;
+    outFS << "*                     APPROVED TRANSACTIONS                     *" << endl;
     outFS << "*****************************************************************" << endl;
+    outFS << fixed << setprecision(2);                                          //limits decimal to two digits
     
-    for (int i = 0; i < transactionlist.size(); i++) {                          //iterates through transactions
+    for (unsigned int i = 0; i < transactionlist.size(); i++) {                          //iterates through transactions
         if (transactionlist.at(i).GetEval() == false) {                         //only checks unevaluated transactions
             total = 0.00;                                                       //resets total to 0.00
             cardnum = transactionlist.at(i).GetCardnum();                       //assigns cardnum to object's cardnum_ member variable
-            outFS << "-----CARD #: " << cardnum << "-----" << endl;             //prints information
-            outFS << "CARDHOLDER: " << transactionlist.at(i).GetLastname() << ", " << transactionlist.at(i).GetFirstname();
+            outFS << endl << "-----CARD #: " << cardnum << "-----" << endl;             //prints information
+            outFS << "CARDHOLDER: " << transactionlist.at(i).GetLastname() << ", " << transactionlist.at(i).GetFirstname() << endl;
             outFS << "TRANSACTIONS: " << endl;
-            for (int i = 0; i < transactionlist.size(); i++) {                  //prints each approved transaction associated with the cardnumber
+            for (unsigned int i = 0; i < transactionlist.size(); i++) {                  //prints each approved transaction associated with the cardnumber
                 if (cardnum == transactionlist.at(i).GetCardnum() && transactionlist.at(i).GetEval() == false) {
                     transactionlist.at(i).SetEval(true);                        //marks each transaction as evaluated
-                    outFS << "    Transaction: " << transactionlist.at(i).GetTransaction() << ", Vendor: " << transactionlist.at(i).GetVendor() << ", Amount: " << transactionlist.at(i).GetAmount() << endl;
+                    outFS << "    Transaction #" << transactionlist.at(i).GetTransaction() << ", Date: " << transactionlist.at(i).GetDate() << ", Vendor: " << transactionlist.at(i).GetVendor() << ", Amount: $" << transactionlist.at(i).GetAmount() << endl;
                     total += transactionlist.at(i).GetAmount();
                 }
             }
@@ -197,6 +207,128 @@ int main() {
 }
 
 /* 
+
+SAMPLE OUTPUT (from report.txt)
+*****************************************************************
+*                     DECLINED TRANSACTIONS                     *
+*****************************************************************
+
+CARD #340000000000009 DECLINED
+                          REASON: NOT IN SYSTEM
+
+CARD #4222222422222 DECLINED
+                          REASON: NOT IN SYSTEM
+
+TRANSACTION #58774546462, DATE: 10/31/2017, VENDOR: Costumes-R-Us, AMOUNTt: $19.99
+                          REASON: FUNDS UNAVAILABLE
+
+TRANSACTION #842554648, DATE: 09/08/2017, VENDOR: Build.com, AMOUNTt: $28.72
+                          REASON: FAILED LUHN'S
+
+TRANSACTION #420420420420, DATE: 04/20/2017, VENDOR: DopestGrass, AMOUNTt: $420.42
+                          REASON: FUNDS UNAVAILABLE
+
+TRANSACTION #846351545, DATE: 2/26/2018, VENDOR: WinCo, AMOUNTt: $17.38
+                          REASON: FAILED LUHN'S
+
+TRANSACTION #6247863791, DATE: 07/04/2017, VENDOR: Fireworks.com, AMOUNTt: $256.84
+                          REASON: FUNDS UNAVAILABLE
+
+
+*****************************************************************
+*                     APPROVED TRANSACTIONS                     *
+*****************************************************************
+
+-----CARD #: 378282246310005-----
+CARDHOLDER: Degrasse-Tyson, Neil
+TRANSACTIONS: 
+    Transaction #52486122, Date: 03/14/2017, Vendor: Target, Amount: $13.45
+TOTAL SPENT: $13.45
+CURRENT BALANCE: $2513.45
+REBATE FOR THIS MONTH: $0.13
+
+-----CARD #: 378734493671000-----
+CARDHOLDER: Lynch, Scott
+TRANSACTIONS: 
+    Transaction #3177924, Date: 01/03/2018, Vendor: WalMart, Amount: $23.97
+    Transaction #327546812, Date: 07/24/2017, Vendor: Expedia.com, Amount: $1354.85
+TOTAL SPENT: $1378.82
+CURRENT BALANCE: $4378.82
+REBATE FOR THIS MONTH: $27.58
+
+-----CARD #: 6011111111111117-----
+CARDHOLDER: B'Ardugo, Leigh
+TRANSACTIONS: 
+    Transaction #9751369974, Date: 06/05/2017, Vendor: REI, Amount: $259.47
+    Transaction #5462846879, Date: 11/13/2017, Vendor: GetRichQuick, Amount: $99.99
+TOTAL SPENT: $359.46
+CURRENT BALANCE: $4859.46
+REBATE FOR THIS MONTH: $7.19
+
+-----CARD #: 340000000000009-----
+CARDHOLDER: B'Ardugo, Leigh
+TRANSACTIONS: 
+    Transaction #4258545512, Date: 11/16/2017, Vendor: Codecademy.com, Amount: $19.99
+TOTAL SPENT: $19.99
+CURRENT BALANCE: $4519.99
+REBATE FOR THIS MONTH: $0.40
+
+-----CARD #: 4111111111111111-----
+CARDHOLDER: Cline, Ernest
+TRANSACTIONS: 
+    Transaction #82468413, Date: 02/13/2018, Vendor: Flowers4Her.com, Amount: $14.25
+    Transaction #6182444792, Date: 08/15/2017, Vendor: WalMart, Amount: $45.36
+TOTAL SPENT: $59.61
+CURRENT BALANCE: $4059.61
+REBATE FOR THIS MONTH: $1.19
+
+-----CARD #: 5105105105105100-----
+CARDHOLDER: Musk, Elon
+TRANSACTIONS: 
+    Transaction #1234567890, Date: 01/23/2018, Vendor: TotallyLegitNotAScam, Amount: $1549.75
+TOTAL SPENT: $1549.75
+CURRENT BALANCE: $10549.75
+REBATE FOR THIS MONTH: $77.49
+      !!! WARNING !!!
+YOUR ACCOUNT IS OVERDRAFTED
+
+-----CARD #: 4012888888881881-----
+CARDHOLDER: Noah, Trevor
+TRANSACTIONS: 
+    Transaction #1826482, Date: 09/20/2017, Vendor: Patreon, Amount: $75.00
+    Transaction #8438167796, Date: 05/04/2017, Vendor: GoFundMe, Amount: $50.00
+TOTAL SPENT: $125.00
+CURRENT BALANCE: $3625.00
+REBATE FOR THIS MONTH: $2.50
+
+-----CARD #: 4222222222222-----
+CARDHOLDER: Martin, George
+TRANSACTIONS: 
+    Transaction #462284938, Date: 10/07/2017, Vendor: iTunes, Amount: $11.99
+TOTAL SPENT: $11.99
+CURRENT BALANCE: $2811.99
+REBATE FOR THIS MONTH: $0.12
+
+-----CARD #: 6011000990139424-----
+CARDHOLDER: Darwin, Charles
+TRANSACTIONS: 
+    Transaction #846214894, Date: 08/01/2017, Vendor: TacoBell, Amount: $14.85
+    Transaction #634477415, Date: 11/24/2017, Vendor: TurkeyTime, Amount: $84.62
+TOTAL SPENT: $99.47
+CURRENT BALANCE: $11099.47
+REBATE FOR THIS MONTH: $4.97
+      !!! WARNING !!!
+YOUR ACCOUNT IS OVERDRAFTED
+
+-----CARD #: 5555555555554444-----
+CARDHOLDER: Hawking, Stephen
+TRANSACTIONS: 
+    Transaction #47125236, Date: 12/23/2017, Vendor: NorthPole, Amount: $9.56
+TOTAL SPENT: $9.56
+CURRENT BALANCE: $8509.56
+REBATE FOR THIS MONTH: $0.48
+
+////////////////////
 
 TEST CODE -- USED AND COMMENTED OUT
 cout << endl << "######## GOLDCARDS VECTOR ########" << endl;

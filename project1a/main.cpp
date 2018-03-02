@@ -40,7 +40,8 @@ int main() {
         }
         
         while (!isspace(ccnumSS.peek())){                                       //so long as digit isn't a space,
-            ccnumSS >> digit;                                                   //reads in one digit from the stringstream
+            ccnumSS >> digit;               
+            //reads in one digit from the stringstream
             cardnum.push_back(digit - 48);                                      //pushes digit - 48 (for ascii difference) onto vector
         }
         

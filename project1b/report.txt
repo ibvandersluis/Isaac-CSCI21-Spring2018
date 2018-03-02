@@ -1,0 +1,118 @@
+*****************************************************************
+*                     DECLINED TRANSACTIONS                     *
+*****************************************************************
+
+CARD #340000000000009 DECLINED
+                          REASON: NOT IN SYSTEM
+
+CARD #4222222422222 DECLINED
+                          REASON: NOT IN SYSTEM
+
+TRANSACTION #58774546462, DATE: 10/31/2017, VENDOR: Costumes-R-Us, AMOUNTt: $19.99
+                          REASON: FUNDS UNAVAILABLE
+
+TRANSACTION #842554648, DATE: 09/08/2017, VENDOR: Build.com, AMOUNTt: $28.72
+                          REASON: FAILED LUHN'S
+
+TRANSACTION #420420420420, DATE: 04/20/2017, VENDOR: DopestGrass, AMOUNTt: $420.42
+                          REASON: FUNDS UNAVAILABLE
+
+TRANSACTION #846351545, DATE: 2/26/2018, VENDOR: WinCo, AMOUNTt: $17.38
+                          REASON: FAILED LUHN'S
+
+TRANSACTION #6247863791, DATE: 07/04/2017, VENDOR: Fireworks.com, AMOUNTt: $256.84
+                          REASON: FUNDS UNAVAILABLE
+
+
+*****************************************************************
+*                     APPROVED TRANSACTIONS                     *
+*****************************************************************
+
+-----CARD #: 378282246310005-----
+CARDHOLDER: Degrasse-Tyson, Neil
+TRANSACTIONS: 
+    Transaction #52486122, Date: 03/14/2017, Vendor: Target, Amount: $13.45
+TOTAL SPENT: $13.45
+CURRENT BALANCE: $2513.45
+REBATE FOR THIS MONTH: $0.13
+
+-----CARD #: 378734493671000-----
+CARDHOLDER: Lynch, Scott
+TRANSACTIONS: 
+    Transaction #3177924, Date: 01/03/2018, Vendor: WalMart, Amount: $23.97
+    Transaction #327546812, Date: 07/24/2017, Vendor: Expedia.com, Amount: $1354.85
+TOTAL SPENT: $1378.82
+CURRENT BALANCE: $4378.82
+REBATE FOR THIS MONTH: $27.58
+
+-----CARD #: 6011111111111117-----
+CARDHOLDER: B'Ardugo, Leigh
+TRANSACTIONS: 
+    Transaction #9751369974, Date: 06/05/2017, Vendor: REI, Amount: $259.47
+    Transaction #5462846879, Date: 11/13/2017, Vendor: GetRichQuick, Amount: $99.99
+TOTAL SPENT: $359.46
+CURRENT BALANCE: $4859.46
+REBATE FOR THIS MONTH: $7.19
+
+-----CARD #: 340000000000009-----
+CARDHOLDER: B'Ardugo, Leigh
+TRANSACTIONS: 
+    Transaction #4258545512, Date: 11/16/2017, Vendor: Codecademy.com, Amount: $19.99
+TOTAL SPENT: $19.99
+CURRENT BALANCE: $4519.99
+REBATE FOR THIS MONTH: $0.40
+
+-----CARD #: 4111111111111111-----
+CARDHOLDER: Cline, Ernest
+TRANSACTIONS: 
+    Transaction #82468413, Date: 02/13/2018, Vendor: Flowers4Her.com, Amount: $14.25
+    Transaction #6182444792, Date: 08/15/2017, Vendor: WalMart, Amount: $45.36
+TOTAL SPENT: $59.61
+CURRENT BALANCE: $4059.61
+REBATE FOR THIS MONTH: $1.19
+
+-----CARD #: 5105105105105100-----
+CARDHOLDER: Musk, Elon
+TRANSACTIONS: 
+    Transaction #1234567890, Date: 01/23/2018, Vendor: TotallyLegitNotAScam, Amount: $1549.75
+TOTAL SPENT: $1549.75
+CURRENT BALANCE: $10549.75
+REBATE FOR THIS MONTH: $77.49
+      !!! WARNING !!!
+YOUR ACCOUNT IS OVERDRAFTED
+
+-----CARD #: 4012888888881881-----
+CARDHOLDER: Noah, Trevor
+TRANSACTIONS: 
+    Transaction #1826482, Date: 09/20/2017, Vendor: Patreon, Amount: $75.00
+    Transaction #8438167796, Date: 05/04/2017, Vendor: GoFundMe, Amount: $50.00
+TOTAL SPENT: $125.00
+CURRENT BALANCE: $3625.00
+REBATE FOR THIS MONTH: $2.50
+
+-----CARD #: 4222222222222-----
+CARDHOLDER: Martin, George
+TRANSACTIONS: 
+    Transaction #462284938, Date: 10/07/2017, Vendor: iTunes, Amount: $11.99
+TOTAL SPENT: $11.99
+CURRENT BALANCE: $2811.99
+REBATE FOR THIS MONTH: $0.12
+
+-----CARD #: 6011000990139424-----
+CARDHOLDER: Darwin, Charles
+TRANSACTIONS: 
+    Transaction #846214894, Date: 08/01/2017, Vendor: TacoBell, Amount: $14.85
+    Transaction #634477415, Date: 11/24/2017, Vendor: TurkeyTime, Amount: $84.62
+TOTAL SPENT: $99.47
+CURRENT BALANCE: $11099.47
+REBATE FOR THIS MONTH: $4.97
+      !!! WARNING !!!
+YOUR ACCOUNT IS OVERDRAFTED
+
+-----CARD #: 5555555555554444-----
+CARDHOLDER: Hawking, Stephen
+TRANSACTIONS: 
+    Transaction #47125236, Date: 12/23/2017, Vendor: NorthPole, Amount: $9.56
+TOTAL SPENT: $9.56
+CURRENT BALANCE: $8509.56
+REBATE FOR THIS MONTH: $0.48
