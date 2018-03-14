@@ -1,37 +1,16 @@
 #include "Proj1Aux.h"
 
 int main() {
-    Board       gameboard;
-    Board       playerboard;
-    string      filename;
-    ifstream    inFS;
-    ofstream    outFS;
-    char        c;
+    Board       gameboard;                                                      // Board object for storing the game board
+    Board       playerboard;                                                    // Board object for storing the board the player sees
     
-    for (unsigned int i = 0; i < 100; i++) {
-        playerboard.SetBoard('o');
-    }
+    cout << "Welcome to Battleship Solitaire!" << endl << endl;                 // Prints greeting and instructions to user
+    cout << "This is a single player version of the naval warfare game Battleship." << endl;
+    cout << "Import a pre-configured game board and try to win in the fewest turns possible!" << endl << endl;
     
-    cout << "Welcome to Battleship!" << endl << endl;
+    gameboard.Populate();                                                       // Imports board template and populates the game board object
     
-    cout << "Enter file name to import game board: ";
-    cin >> filename;
+    PlayBattleship(playerboard, gameboard);                                     // Runs the Battleship game function
     
-    inFS.open(filename.c_str());
-    while (!inFS.is_open()) {                                                      //prints error if file won't open
-        cout << "Could not open file " << filename << endl;
-        cout << "Please enter a valid file name: ";
-        cin >> filename;
-        inFS.open(filename.c_str());
-    }
-    
-    while (!inFS.eof()) {
-        inFS >> c;
-        gameboard.SetBoard(c);
-    }
-    
-    inFS.close();
-    
-    PlayGame(playerboard, gameboard);
-    
+    return 0;
 }

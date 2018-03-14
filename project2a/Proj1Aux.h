@@ -1,45 +1,46 @@
-#ifndef PROJ1AUX_H
+#ifndef PROJ1AUX_H                                                              // Header Guards
 #define PROJ1AUX_H
 
-#include <iostream>
+#include <iostream>                                                             // #include appropriate libraries
 #include <vector>
 #include <fstream>
 #include <sstream>
 using namespace std;
 
-class Player {
+class Player {                                                                  // Empty class Player, base class for Human and Computer
     public:
     protected:
 };
 
-class Human : public Player {
+class Human : public Player {                                                   // Human class
     public:
         Human();
     private:
 };
 
-class Computer : public Player {
+class Computer : public Player {                                                // Computer class
     public:
         Computer();
     private:
 };
 
-class Board {
+class Board {                                                                   // Board class
     public:
-        Board();
-        Board(vector<char> board);
+        Board();                                                                // Default constructor
+        Board(vector<char> board);                                              // Overload constructor
         
-        void SetBoard(char ch);
-        void SetBoard(unsigned int index, char ch);
+        void SetBoard(char ch);                                                 // Mutator
+        void SetBoard(unsigned int index, char ch);                             // Overload mutator
         
-        vector<char> GetBoard() const;
-        char GetBoard(unsigned int index) const;
+        vector<char> GetBoard() const;                                          // Accessor
+        char GetBoard(unsigned int index) const;                                // Overload accessor
         
-        void Print() const;
+        void Print() const;                                                     // Prints formatted board
+        void Populate();                                                        // Prompts user for import file and populates board from it
     private:
-        vector<char> board_;
+        vector<char> board_;                                                    // The game board stored as a char vector
 };
 
-void PlayGame(Board &player, Board &game);
+void PlayBattleship(Board &player, Board &game);                                // Function for playing Battleship
 
 #endif
