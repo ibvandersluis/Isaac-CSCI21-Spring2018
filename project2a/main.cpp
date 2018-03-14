@@ -2,10 +2,15 @@
 
 int main() {
     Board       gameboard;
+    Board       playerboard;
     string      filename;
     ifstream    inFS;
     ofstream    outFS;
     char        c;
+    
+    for (unsigned int i = 0; i < 100; i++) {
+        playerboard.SetBoard('o');
+    }
     
     cout << "Welcome to Battleship!" << endl << endl;
     
@@ -13,9 +18,11 @@ int main() {
     cin >> filename;
     
     inFS.open(filename.c_str());
-    if (!inFS.is_open()) {                                                      //prints error if file won't open
+    while (!inFS.is_open()) {                                                      //prints error if file won't open
         cout << "Could not open file " << filename << endl;
-        return 1;
+        cout << "Please enter a valid file name: ";
+        cin >> filename;
+        inFS.open(filename.c_str());
     }
     
     while (!inFS.eof()) {
@@ -23,7 +30,8 @@ int main() {
         gameboard.SetBoard(c);
     }
     
-    gameboard.Print();
+    inFS.close();
     
+    PlayGame(playerboard, gameboard);
     
 }
