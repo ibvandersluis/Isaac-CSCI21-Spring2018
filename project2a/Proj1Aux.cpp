@@ -143,6 +143,7 @@ void PlayBattleship(Board &player, Board &game) {
         too_big = false;                                                        // Initializes to false
         cout << endl << "Turn: " << turn << endl;                               // Prints current turn
         cout << "Hits: " << hits << endl;                                       // Prints number of hits
+        cout << endl << "Player's board:" << endl;                              // Prints player's board
         player.Print();                                                         // Prints player's view of board
         while ((rowchar < 65 || rowchar > 74) || (colchar < 48 || colchar > 57)) {
             cout << "Enter the letter and number of the square you wish to attack (Ex: A1): ";
@@ -192,10 +193,18 @@ void PlayBattleship(Board &player, Board &game) {
                     hits++;                                                     // Increments hit counter
                 }
             }
-        }
+            
+            cout << endl;                                                       // Whitespace
+            if (result == 'H') {
+                cout << "It's a HIT!";                                          // Lets player know if it was a hit or a miss
+            } else {
+                cout << "It's a MISS!";
+            }
+            cout << endl << endl;                                               // Whitespace
+        } else {
+            cout << endl << "You already attacked that square, genius." << endl << endl;
+        }                                                                       // Chides user if they already attacked the specified square
         
-        cout << endl << "Player's board:" << endl;                              // Prints player's board
-        player.Print();
         cout << "Game board:" << endl;                                          // Prints game board
         game.Print();
         
