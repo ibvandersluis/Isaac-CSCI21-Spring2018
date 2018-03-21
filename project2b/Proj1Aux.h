@@ -9,18 +9,27 @@ using namespace std;
 
 class Player {                                                                  // Empty class Player, base class for Human and Computer
     public:
+        
+        virtual void PrintBoard();                                              // Punction that prints the object's game board
     protected:
 };
 
 class Human : public Player {                                                   // Human class
     public:
         Human();
+        
+        void PrintBoard();
+        void PlayBattleship(); //FIXME// modify for function call from Human class
     private:
+        Board top_screen;                                                       // This board shows the player's view of their hits and misses on the enemy
+        Board bottom_screen;                                                    // This board shows the player's view of their ships and the enemy's hits and misses
 };
 
 class Computer : public Player {                                                // Computer class
     public:
         Computer();
+        
+        void PrintBoard();
     private:
 };
 

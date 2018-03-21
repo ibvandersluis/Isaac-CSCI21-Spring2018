@@ -7,6 +7,106 @@ Human::Human() {
     
 }
 
+void Human::PrintBoard() {
+    
+}
+
+/*  Purpose :   Plays Battleship game
+ *  Input   :   2 pass-by-reference Board objects
+ *  Output  :   No return, prints Battleship process until game is finished
+ */
+void Human::PlayBattleship(Board &game) { //FIXME// modify for function call from Human class
+    unsigned int hits = 0;                                                      // Tracks number of hits player has made
+    unsigned int turn = 1;                                                      // Tracks number of turns
+    string square = "";                                                         // For user input
+    stringstream SS;                                                            // For separating input into characters
+    char result;                                                                // Stores the result of the attack
+    char rowchar;                                                               // Character for tracking row
+    char colchar;                                                               // Character for tracking column
+    vector<char> rows;                                                          // Parallell vectorss for tracking previous attacks
+    vector<char> cols;
+    bool too_big;                                                               // Boolean is true when user input is too long
+    
+    while (hits < 17) {
+        rowchar = 'K';                                                          // Initializes to out-of-range value
+        too_big = false;                                                        // Initializes to false
+        cout << endl << "Turn: " << turn << endl;                               // Prints current turn
+        cout << "Hits: " << hits << endl;                                       // Prints number of hits
+        cout << endl << "Player's board:" << endl;                              // Prints player's board
+        player.Print();                                                         // Prints player's view of board
+        while ((rowchar < 65 || rowchar > 74) || (colchar < 48 || colchar > 57)) {
+            cout << "Enter the letter and number of the square you wish to attack (Ex: A1): ";
+            cin >> square;                                                      // Prompts user for valid move
+            if (square.length() > 2) {                                          // Sets too_big to true if input exceeds 2 characters
+                too_big = true;
+            }
+            
+            SS << square;                                                       // Puts into stringstream
+            SS >> rowchar;                                                      // Gets row
+            SS >> colchar;                                                      // Gets column
+            
+            if (rowchar >= 97 && rowchar <= 106) {                              // If user entered lower case letter, makes it upper case
+                rowchar -= 32;
+            }
+        }
+        
+        if (too_big == true) {                                                  // Prints error if input too long
+            cout << endl << "ERROR: Extra characters ignored." << endl;
+        }
+        
+        SS.str("");                                                             // Clears stringstream
+        
+        int row = rowchar - 65;                                                 // Turns row character into a number
+        int col = colchar - 48;                                                 // Turns column character into a number
+        int pos = row * 10 + col;                                               // Determines index player is attacking in board_
+        char square = game.GetBoard(pos);                                       // Tracks character that represents the square being attacked
+        
+        if (square == 'S' || square == 'o') {                                   // If square hasn't been previously attacked,
+                if (square == 'S') {                                            // Sets result to appropriate character
+                result = 'H';
+            } else {
+                result = 'M';
+            }
+            
+            game.SetBoard(pos, result);                                         // Sets attacked square to display the result of the attack
+            player.SetBoard(pos, result);
+            
+            if (result == 'H') {                                                // If it's a hit,
+                bool found = false;                                             // Initializes found to false
+                for (unsigned int i = 0; i < rows.size(); i++) {                // Iterates through parallel vectors
+                    if ((rows.at(i) == rowchar && cols.at(i) == colchar)) {     // If square has been attacked before,
+                        found = true;                                           // found is true
+                    }
+                }
+                if (found == false) {                                           // If found is false
+                    hits++;                                                     // Increments hit counter
+                }
+            }
+            
+            cout << endl;                                                       // Whitespace
+            if (result == 'H') {
+                cout << "It's a HIT!";                                          // Lets player know if it was a hit or a miss
+            } else {
+                cout << "It's a MISS!";
+            }
+            cout << endl << endl;                                               // Whitespace
+        } else {
+            cout << endl << "You already attacked that square, genius." << endl << endl;
+        }                                                                       // Chides user if they already attacked the specified square
+        
+        cout << "Game board:" << endl;                                          // Prints game board
+        game.Print();
+        
+        rows.push_back(rowchar);                                                // Adds row character to parallel vectors
+        cols.push_back(colchar);                                                // Adds column character to parallel vectors
+        turn++;                                                                 // Increments turn counter
+    }
+    
+    cout << "Congratulations, you've won!" << endl << endl;                     // Prints message after all ships have been sunk
+    
+    return;
+}
+
 ////////// COMPUTER MEMBER FUNCTIONS //////////
 
 Computer::Computer() {
@@ -122,98 +222,3 @@ void Board::Populate() {
     inFS.close();                                                               // Closes file
 }
 
-/*  Purpose :   Plays Battleship game
- *  Input   :   2 pass-by-reference Board objects
- *  Output  :   No return, prints Battleship process until game is finished
- */
-void PlayBattleship(Board &player, Board &game) {
-    unsigned int hits = 0;                                                      // Tracks number of hits player has made
-    unsigned int turn = 1;                                                      // Tracks number of turns
-    string square = "";                                                         // For user input
-    stringstream SS;                                                            // For separating input into characters
-    char result;                                                                // Stores the result of the attack
-    char rowchar;                                                               // Character for tracking row
-    char colchar;                                                               // Character for tracking column
-    vector<char> rows;                                                          // Parallell vectorss for tracking previous attacks
-    vector<char> cols;
-    bool too_big;                                                               // Boolean is true when user input is too long
-    
-    while (hits < 17) {
-        rowchar = 'K';                                                          // Initializes to out-of-range value
-        too_big = false;                                                        // Initializes to false
-        cout << endl << "Turn: " << turn << endl;                               // Prints current turn
-        cout << "Hits: " << hits << endl;                                       // Prints number of hits
-        cout << endl << "Player's board:" << endl;                              // Prints player's board
-        player.Print();                                                         // Prints player's view of board
-        while ((rowchar < 65 || rowchar > 74) || (colchar < 48 || colchar > 57)) {
-            cout << "Enter the letter and number of the square you wish to attack (Ex: A1): ";
-            cin >> square;                                                      // Prompts user for valid move
-            if (square.length() > 2) {                                          // Sets too_big to true if input exceeds 2 characters
-                too_big = true;
-            }
-            
-            SS << square;                                                       // Puts into stringstream
-            SS >> rowchar;                                                      // Gets row
-            SS >> colchar;                                                      // Gets column
-            
-            if (rowchar >= 97 && rowchar <= 106) {                              // If user entered lower case letter, makes it upper case
-                rowchar -= 32;
-            }
-        }
-        
-        if (too_big == true) {                                                  // Prints error if input too long
-            cout << endl << "ERROR: Extra characters ignored." << endl;
-        }
-        
-        SS.str("");                                                             // Clears stringstream
-        
-        int row = rowchar - 65;                                                 // Turns row character into a number
-        int col = colchar - 48;                                                 // Turns column character into a number
-        int pos = row * 10 + col;                                               // Determines index player is attacking in board_
-        char square = game.GetBoard(pos);                                       // Tracks character that represents the square being attacked
-        
-        if (square == 'S' || square == 'o') {                                   // If square hasn't been previously attacked,
-                if (square == 'S') {                                            // Sets result to appropriate character
-                result = 'H';
-            } else {
-                result = 'M';
-            }
-            
-            game.SetBoard(pos, result);                                         // Sets attacked square to display the result of the attack
-            player.SetBoard(pos, result);
-            
-            if (result == 'H') {                                                // If it's a hit,
-                bool found = false;                                             // Initializes found to false
-                for (unsigned int i = 0; i < rows.size(); i++) {                // Iterates through parallel vectors
-                    if ((rows.at(i) == rowchar && cols.at(i) == colchar)) {     // If square has been attacked before,
-                        found = true;                                           // found is true
-                    }
-                }
-                if (found == false) {                                           // If found is false
-                    hits++;                                                     // Increments hit counter
-                }
-            }
-            
-            cout << endl;                                                       // Whitespace
-            if (result == 'H') {
-                cout << "It's a HIT!";                                          // Lets player know if it was a hit or a miss
-            } else {
-                cout << "It's a MISS!";
-            }
-            cout << endl << endl;                                               // Whitespace
-        } else {
-            cout << endl << "You already attacked that square, genius." << endl << endl;
-        }                                                                       // Chides user if they already attacked the specified square
-        
-        cout << "Game board:" << endl;                                          // Prints game board
-        game.Print();
-        
-        rows.push_back(rowchar);                                                // Adds row character to parallel vectors
-        cols.push_back(colchar);                                                // Adds column character to parallel vectors
-        turn++;                                                                 // Increments turn counter
-    }
-    
-    cout << "Congratulations, you've won!" << endl << endl;                     // Prints message after all ships have been sunk
-    
-    return;
-}
