@@ -1,118 +1,5 @@
 #include "Proj1Aux.h"
 
-
-////////// HUMAN MEMBER FUNCTIONS //////////
-
-Human::Human() {
-    
-}
-
-void Human::PrintBoard() {
-    
-}
-
-/*  Purpose :   Plays Battleship game
- *  Input   :   2 pass-by-reference Board objects
- *  Output  :   No return, prints Battleship process until game is finished
- */
-void Human::PlayBattleship(Board &game) { //FIXME// modify for function call from Human class
-    unsigned int hits = 0;                                                      // Tracks number of hits player has made
-    unsigned int turn = 1;                                                      // Tracks number of turns
-    string square = "";                                                         // For user input
-    stringstream SS;                                                            // For separating input into characters
-    char result;                                                                // Stores the result of the attack
-    char rowchar;                                                               // Character for tracking row
-    char colchar;                                                               // Character for tracking column
-    vector<char> rows;                                                          // Parallell vectorss for tracking previous attacks
-    vector<char> cols;
-    bool too_big;                                                               // Boolean is true when user input is too long
-    
-    while (hits < 17) {
-        rowchar = 'K';                                                          // Initializes to out-of-range value
-        too_big = false;                                                        // Initializes to false
-        cout << endl << "Turn: " << turn << endl;                               // Prints current turn
-        cout << "Hits: " << hits << endl;                                       // Prints number of hits
-        cout << endl << "Player's board:" << endl;                              // Prints player's board
-        player.Print();                                                         // Prints player's view of board
-        while ((rowchar < 65 || rowchar > 74) || (colchar < 48 || colchar > 57)) {
-            cout << "Enter the letter and number of the square you wish to attack (Ex: A1): ";
-            cin >> square;                                                      // Prompts user for valid move
-            if (square.length() > 2) {                                          // Sets too_big to true if input exceeds 2 characters
-                too_big = true;
-            }
-            
-            SS << square;                                                       // Puts into stringstream
-            SS >> rowchar;                                                      // Gets row
-            SS >> colchar;                                                      // Gets column
-            
-            if (rowchar >= 97 && rowchar <= 106) {                              // If user entered lower case letter, makes it upper case
-                rowchar -= 32;
-            }
-        }
-        
-        if (too_big == true) {                                                  // Prints error if input too long
-            cout << endl << "ERROR: Extra characters ignored." << endl;
-        }
-        
-        SS.str("");                                                             // Clears stringstream
-        
-        int row = rowchar - 65;                                                 // Turns row character into a number
-        int col = colchar - 48;                                                 // Turns column character into a number
-        int pos = row * 10 + col;                                               // Determines index player is attacking in board_
-        char square = game.GetBoard(pos);                                       // Tracks character that represents the square being attacked
-        
-        if (square == 'S' || square == 'o') {                                   // If square hasn't been previously attacked,
-                if (square == 'S') {                                            // Sets result to appropriate character
-                result = 'H';
-            } else {
-                result = 'M';
-            }
-            
-            game.SetBoard(pos, result);                                         // Sets attacked square to display the result of the attack
-            player.SetBoard(pos, result);
-            
-            if (result == 'H') {                                                // If it's a hit,
-                bool found = false;                                             // Initializes found to false
-                for (unsigned int i = 0; i < rows.size(); i++) {                // Iterates through parallel vectors
-                    if ((rows.at(i) == rowchar && cols.at(i) == colchar)) {     // If square has been attacked before,
-                        found = true;                                           // found is true
-                    }
-                }
-                if (found == false) {                                           // If found is false
-                    hits++;                                                     // Increments hit counter
-                }
-            }
-            
-            cout << endl;                                                       // Whitespace
-            if (result == 'H') {
-                cout << "It's a HIT!";                                          // Lets player know if it was a hit or a miss
-            } else {
-                cout << "It's a MISS!";
-            }
-            cout << endl << endl;                                               // Whitespace
-        } else {
-            cout << endl << "You already attacked that square, genius." << endl << endl;
-        }                                                                       // Chides user if they already attacked the specified square
-        
-        cout << "Game board:" << endl;                                          // Prints game board
-        game.Print();
-        
-        rows.push_back(rowchar);                                                // Adds row character to parallel vectors
-        cols.push_back(colchar);                                                // Adds column character to parallel vectors
-        turn++;                                                                 // Increments turn counter
-    }
-    
-    cout << "Congratulations, you've won!" << endl << endl;                     // Prints message after all ships have been sunk
-    
-    return;
-}
-
-////////// COMPUTER MEMBER FUNCTIONS //////////
-
-Computer::Computer() {
-    
-}
-
 ////////// BOARD MEMBER FUNCTIONS //////////
 
 /*  Purpose :   Default constructor
@@ -137,8 +24,8 @@ Board::Board(vector<char> board) {
  *  Input   :   1 character
  *  Output  :   None
  */
-void Board::SetBoard(char ch) {
-    board_.push_back(ch);
+void Board::setBoard(char c) {
+    board_.push_back(c);
     
     return;
 }
@@ -147,7 +34,7 @@ void Board::SetBoard(char ch) {
  *  Input   :   1 unsigned int, 1 character
  *  Output  :   None
  */
-void Board::SetBoard(unsigned int index, char ch) {
+void Board::setBoard(unsigned int index, char ch) {
     board_.at(index) = ch;
     
     return;
@@ -157,7 +44,7 @@ void Board::SetBoard(unsigned int index, char ch) {
  *  Input   :   None
  *  Output  :   1 char vector
  */
-vector<char> Board::GetBoard() const {
+vector<char> Board::getBoard() const {
     return board_;
 }
 
@@ -165,7 +52,7 @@ vector<char> Board::GetBoard() const {
  *  Input   :   1 unsigned int
  *  Output  :   1 char
  */
-char Board::GetBoard(unsigned int index) const {
+char Board::getBoard(unsigned int index) const {
     return board_.at(index);
 }
 
@@ -173,7 +60,7 @@ char Board::GetBoard(unsigned int index) const {
  *  Input   :   None
  *  Output  :   No return, prints game board
  */
-void Board::Print() const {
+void Board::print() const {
     char row = 'A';                                                             // Initializes row to A
     unsigned int factor = 0;                                                    // Initializes to 0 for printing aligned columns
     unsigned int col;                                                           // Tracks columns
@@ -196,14 +83,10 @@ void Board::Print() const {
  *  Input   :   None, gets file name from user
  *  Output  :   None
  */
-void Board::Populate() {
+void Board::populate(string filename) {
     ifstream inFS;
-    string filename;
     char c;
     unsigned int i = 0;
-    
-    cout << "Enter file name to import game board: ";                           // Prompts user for import file
-    cin >> filename;
     
     inFS.open(filename.c_str());                                                // Opens file
     while (!inFS.is_open()) {                                                   // Prints error if file won't open
@@ -220,5 +103,215 @@ void Board::Populate() {
     }
     
     inFS.close();                                                               // Closes file
+}
+
+////////// PLAYER MEMBER FUNCTIONS //////////
+
+void Player::printTop() {
+    top_.print();
+    
+    return;
+}
+
+void Player::setTop(char c) {
+    top_.setBoard(c);
+    
+    return;
+}
+
+void Player::setTop(unsigned int index, char c) {
+    top_.setBoard(index, c);
+    
+    return;
+}
+
+void Player::printBottom() {
+    bottom_.print();
+    
+    return;
+}
+
+void Player::setBottom(char c) {
+    bottom_.setBoard(c);
+    
+    return;
+}
+
+void Player::setBottom(unsigned int index, char c) {
+    bottom_.setBoard(index, c);
+    
+    return;
+}
+
+void Player::setHits(unsigned int hits) {
+    hits_ = hits;
+}
+
+vector<char> Player::getTop() const {
+    return top_.getBoard();
+}
+
+char Player::getTop(unsigned int index) const {
+    return top_.getBoard(index);
+}
+
+vector<char> Player::getBottom() const {
+    return bottom_.getBoard();
+}
+
+char Player::getBottom(unsigned int index) const {
+    return bottom_.getBoard(index);
+}
+
+unsigned int Player::getHits() {
+    return hits_;
+}
+
+void Player::populateBottom(string filename) {
+    bottom_.populate(filename);
+    
+    return;
+}
+
+virtual char Player::attack();
+
+////////// HUMAN MEMBER FUNCTIONS //////////
+
+Human::Human() {
+    hits_ = 0;
+}
+
+void Human::attack(unsigned int index, Computer &target, vector<int> &guesses) {
+    char square = target.getBottom(index);                                      // Stores the value stored in the square being attacked
+    char result;                                                                // Stores the result of the attack
+    
+    if (getTop(index) == 'H') {                                                 // Chides user if square has been attacked before
+        cout << endl << "You already attacked that square, genius." << endl << endl;
+    } else {                                                                    // If square hasn't been previously attacked,
+        if (square == 'S') {                                                    // Sets result to appropriate character
+            result = 'H';
+        } else {
+            result = 'M';
+        }
+        
+        target.SetBottom(index, result);                                        // Sets attacked square to display the result of the attack
+        setTop(pos, result);
+        
+        if (result == 'H') {                                                    // If it's a hit,
+            hits_++;                                                            // Increment human's hit counter
+        }
+        
+        cout << endl;                                                           // Whitespace
+        if (result == 'H') {
+            cout << "It's a HIT!";                                              // Lets player know if it was a hit or a miss
+        } else {
+            cout << "It's a MISS!";
+        }
+        cout << endl << endl;                                                   // Whitespace
+    }
+    
+    return;
+}
+
+////////// COMPUTER MEMBER FUNCTIONS //////////
+
+Computer::Computer() {
+    hits_ = 0;
+}
+
+void Computer::setNext(unsigned int index) {
+    next_.push(index);
+    
+    return;
+}
+
+unsigned int Computer::getNext() {
+    unsigned int val = next_.front();
+    next_.pop();
+    
+    return val;
+}
+
+char Computer::attack(Human &target) {
+    unsigned int index;                                                         // Stores number the square to be attacked
+    char row;                                                                   // Stores the row that was attacked
+    char col;                                                                   // Stores the column that was attacked
+    char square;                                                                // Stores the value stored in the square being attacked
+    char result;                                                                // Stores the result of the attack
+    
+    if (!next_.empty()) {
+        index = getNext();
+        while ((getTop(index) == 'H') && (!next_.empty())) {
+            index = getNext();
+        }
+    }
+    
+    if (next_.empty()) {
+        while (getTop(index) == 'H') {
+            index = rand() % 100;
+        }
+    }
+    
+    row = index / 10 + 65;
+    col = index % 10 + 48;
+    square = target.getBottom(index);
+    
+    if (square == 'S') {                                                        // Sets result to appropriate character
+        result = 'H';
+    } else {
+        result = 'M';
+    }
+    
+    target.SetBottom(index, result);                                            // Sets attacked square to display the result of the attack
+    setTop(pos, result);
+    
+    if (result == 'H') {                                                        // If it's a hit,
+        if (index == 0) {
+            setNext(index + 1);
+            setNext(index + 10);
+        } else if (index == 9) {
+            setNext(index + 10);
+            setNext(index - 1);
+        } else if (index == 90) {
+            setNext(index - 10);
+            setNext(index + 1);
+        } else if (index == 99) {
+            setNext(index - 10);
+            setNext(index - 1);
+        } else if (index % 10 == 0) {
+            setNext(index - 10);
+            setNext(index + 1);
+            setNext(index + 10);
+        } else if (index % 10 == 9) {
+            setNext(index - 10);
+            setNext(index + 10);
+            setNext(index - 1);
+        } else if (index < 9) {
+            setNext(index + 1);
+            setNext(index + 10);
+            setNext(index - 1);
+        } else if (index > 90) {
+            setNext(index - 10);
+            setNext(index + 1);
+            setNext(index - 1);
+        } else {
+            setNext(index - 10);
+            setNext(index + 1);
+            setNext(index + 10);
+            setNext(index - 1);
+        }
+        hits_++;                                                                // Increment computer's hit counter
+    }
+    
+    cout << "The computer attacks " << row << col << "." << endl;               // States which square was attacked
+    if (result == 'H') {
+        cout << "It's a HIT!";                                                  // Lets player know if it was a hit or a miss
+    } else {
+        cout << "It's a MISS!";
+    }
+    cout << endl << endl;                                                       // Whitespace
+    
+    return;
+}
 }
 
