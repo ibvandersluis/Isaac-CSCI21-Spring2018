@@ -77,7 +77,7 @@ class Computer : public Player {                                                
         
         void setNext(unsigned int index);                                       // Mutator
         
-        unsigned int getNext();                                                          // Accessor
+        unsigned int getNext();                                                 // Accessor
         
         void attack(Human &target);                                             // Attacks random square if queue is empty, else attacks the next item in the queue
     private:
