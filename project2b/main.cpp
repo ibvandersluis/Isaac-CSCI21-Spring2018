@@ -19,32 +19,29 @@ int main(int argc, char* argv[]) {                                              
     bool too_big = false;                                                       // Boolean is true when user input is too long
     srand(time(0));                                                             // Seeds random with current time
     
-    if (argc < 2 || argc > 3) {
-        cout << "Usage: ./exectue playerboard computerboard (optional)firstmove" << endl;
-        
+    if (argc < 3 || argc > 4) {                                                 // If there are too many or too few arguments
+        cout << "Usage: ./execute playerboard computerboard (optional)firstmove" << endl;
+                                                                                // Prints message to user advising how to implement the command line arguments
         return 1;
     }
-    
-    if (argv[3] == NULL) {
-        human_goes_first = rand() % 2;
-    } else if(argv[3] == "HUMAN") {
-        human_goes_first = true;
-    } else if(argv[3] == "COMPUTER") {
-        human_goes_first = false;
-    } else {
+    cout<<argv[3]<<endl;
+    if (argv[3] == NULL) {                                                      // If the player to move first has not been specified,
+        human_goes_first = rand() % 2;                                          // first player is random
+    } else if(!strcmp(argv[3], "HUMAN")) {                                      // If HUMAN is specified,
+        human_goes_first = true;                                                // Set to true
+    } else if(!strcmp(argv[3], "COMPUTER")) {                                   // If COMPUTER is specified,
+        human_goes_first = false;                                               // Set to false
+    } else {                                                                    // Else, further specification on usage
         cout << "If used, 3rd command line argument must be either 'HUMAN' or 'COMPUTER'" << endl;
         
         return 1;
     }
     
-    
     while ((human.getHits() < 17) && (computer.getHits() < 17)) {
         rowchar = 'K';                                                          // Initializes to out-of-range value
         too_big = false;                                                        // Initializes to false
-        
         if (human_goes_first == true) {
             cout << "Your turn, human!" << endl;
-            
             cout << "Hits: " << human.getHits() << endl;                        // Prints number of hits
             cout << endl << "Top board:" << endl;                               
             human.printTop();                                                   // Prints player's view of oppenent's board
@@ -86,6 +83,7 @@ int main(int argc, char* argv[]) {                                              
         cout << endl << "You won!" << endl;
     } else {
         cout << endl << "You lost." << endl;
+    human.setHits(human.getHits() + 1);
     }
     
     cout << endl << "GOOD GAME" << endl;

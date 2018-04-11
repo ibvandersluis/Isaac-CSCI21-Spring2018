@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <queue>
+#include <cstring>
 using namespace std;
 
 class Computer;
@@ -31,6 +32,9 @@ class Board {                                                                   
 
 class Player {                                                                  // Base class for Human and Computer
     public:
+        Player();
+        ~Player();
+        
         void printTop();                                                        // Function that prints the player's top board
         void setTop(char c);                                                    // Mutator
         void setTop(unsigned int index, char c);                                // Overload mutator
@@ -51,7 +55,7 @@ class Player {                                                                  
         
         void populateBottom(string filename);                                   // Populates the player's bottom board with the contents of a specified file
         
-        virtual void attack();                                                  // Requires subclasses to define "attack"
+        virtual void attack() {};                                                          // Requires subclasses to define "attack"
     protected:
         Board top_;                                                             // Shows the player's "top" screen, with the shots they've made and their hits and misses
         Board bottom_;                                                          // Shows the player's "bottom" screen, with their ships and the opponent's hits and misses
@@ -73,7 +77,7 @@ class Computer : public Player {                                                
         
         void setNext(unsigned int index);                                       // Mutator
         
-        int getNext();                                                          // Accessor
+        unsigned int getNext();                                                          // Accessor
         
         void attack(Human &target);                                             // Attacks random square if queue is empty, else attacks the next item in the queue
     private:

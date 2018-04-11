@@ -7,8 +7,9 @@
  *  Output  :   None
  */
 Board::Board() {
+    board_.resize(0);
     for (unsigned int i = 0; i < 100; i++) {                                    // Creates a blank board
-        SetBoard('o');
+        setBoard('o');
     }
 }
 
@@ -98,7 +99,7 @@ void Board::populate(string filename) {
     
     while (!inFS.eof() && i < 100) {                                            // Populates board_ vector
         inFS >> c;
-        SetBoard(i, c);
+        setBoard(i, c);
         i++;
     }
     
@@ -106,6 +107,14 @@ void Board::populate(string filename) {
 }
 
 ////////// PLAYER MEMBER FUNCTIONS //////////
+
+Player::Player() {
+    hits_ = 0;
+}
+
+Player::~Player() {
+    
+}
 
 void Player::printTop() {
     top_.print();
@@ -173,15 +182,13 @@ void Player::populateBottom(string filename) {
     return;
 }
 
-virtual char Player::attack();
-
 ////////// HUMAN MEMBER FUNCTIONS //////////
 
 Human::Human() {
     hits_ = 0;
 }
 
-void Human::attack(unsigned int index, Computer &target, vector<int> &guesses) {
+void Human::attack(unsigned int index, Computer &target) {
     char square = target.getBottom(index);                                      // Stores the value stored in the square being attacked
     char result;                                                                // Stores the result of the attack
     
@@ -194,8 +201,8 @@ void Human::attack(unsigned int index, Computer &target, vector<int> &guesses) {
             result = 'M';
         }
         
-        target.SetBottom(index, result);                                        // Sets attacked square to display the result of the attack
-        setTop(pos, result);
+        target.setBottom(index, result);                                        // Sets attacked square to display the result of the attack
+        setTop(index, result);
         
         if (result == 'H') {                                                    // If it's a hit,
             hits_++;                                                            // Increment human's hit counter
@@ -232,7 +239,7 @@ unsigned int Computer::getNext() {
     return val;
 }
 
-char Computer::attack(Human &target) {
+void Computer::attack(Human &target) {
     unsigned int index;                                                         // Stores number the square to be attacked
     char row;                                                                   // Stores the row that was attacked
     char col;                                                                   // Stores the column that was attacked
@@ -241,13 +248,14 @@ char Computer::attack(Human &target) {
     
     if (!next_.empty()) {
         index = getNext();
-        while ((getTop(index) == 'H') && (!next_.empty())) {
+        while (((getTop(index) == 'H') || (getTop(index) == 'M')) && (!next_.empty())) {
             index = getNext();
         }
     }
     
     if (next_.empty()) {
-        while (getTop(index) == 'H') {
+        index = rand() % 100;
+        while ((getTop(index) == 'H') || (getTop(index) == 'M')) {
             index = rand() % 100;
         }
     }
@@ -262,8 +270,8 @@ char Computer::attack(Human &target) {
         result = 'M';
     }
     
-    target.SetBottom(index, result);                                            // Sets attacked square to display the result of the attack
-    setTop(pos, result);
+    target.setBottom(index, result);                                            // Sets attacked square to display the result of the attack
+    setTop(index, result);
     
     if (result == 'H') {                                                        // If it's a hit,
         if (index == 0) {
@@ -312,6 +320,5 @@ char Computer::attack(Human &target) {
     cout << endl << endl;                                                       // Whitespace
     
     return;
-}
 }
 
