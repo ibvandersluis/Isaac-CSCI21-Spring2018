@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {                                              
                                                                                 // Prints message to user advising how to implement the command line arguments
         return 1;
     }
-    cout<<argv[3]<<endl;
+    
     if (argv[3] == NULL) {                                                      // If the player to move first has not been specified,
         human_goes_first = rand() % 2;                                          // first player is random
     } else if(!strcmp(argv[3], "HUMAN")) {                                      // If HUMAN is specified,
@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {                                              
             human.printBottom();                                                // Prints player's view of their own board
             while ((rowchar < 65 || rowchar > 74) || (colchar < 48 || colchar > 57)) {
                 cout << "Enter the letter and number of the square you wish to attack (Ex: A1): ";
-                cin >> square;                                                  // Prompts user for valid move
+                getline(cin, square);                                           // Prompts user for valid move
                 if (square.length() > 2) {                                      // Sets too_big to true if input exceeds 2 characters
                     too_big = true;
                 }
@@ -74,21 +74,23 @@ int main(int argc, char* argv[]) {                                              
             int pos = row * 10 + col;                                           // Determines index player is attacking in board_
             human.attack(pos, computer);
         }
-        human_goes_first = true;                                                // Previous if-statement will now execute on all subsequent loops
+        if (human.getHits() < 17) {
+            human_goes_first = true;                                            // Previous if-statement will now execute on all subsequent loops
         
-        computer.attack(human);
+            computer.attack(human);
+        }
     }
     
-    if (human.getHits() == 17) {
-        cout << endl << "You won!" << endl;
+    if (human.getHits() == 17) {                                                // Checks the number of hits the human has
+        cout << endl << "You won!" << endl;                                     // If they have 17 hits, states that they won
     } else {
-        cout << endl << "You lost." << endl;
+        cout << endl << "You lost." << endl;                                    // Otherwise, states that they lost
     human.setHits(human.getHits() + 1);
     }
     
-    cout << endl << "GOOD GAME" << endl;
+    cout << endl << "GOOD GAME" << endl;                                        // Computer is a good sport, so says good game either way
     
-    cout << endl << "Your opponent's board: " << endl;
+    cout << endl << "Your opponent's board: " << endl;                          // Shows the opponent's board
     
     computer.printBottom();
     
