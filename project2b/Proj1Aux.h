@@ -55,7 +55,7 @@ class Player {                                                                  
         
         void populateBottom(string filename);                                   // Populates the player's bottom board with the contents of a specified file
         
-        virtual void attack() {};                                               // Requires subclasses to define "attack"
+        virtual void attack() {};                                               // Requires subclasses to define "attack()"
     protected:
         Board top_;                                                             // Shows the player's "top" screen, with the shots they've made and their hits and misses
         Board bottom_;                                                          // Shows the player's "bottom" screen, with their ships and the opponent's hits and misses
