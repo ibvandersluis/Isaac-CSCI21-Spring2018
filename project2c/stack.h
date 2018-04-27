@@ -14,6 +14,5 @@ class Stack {
         void print();                                                           // Prints all items in the stack
         unsigned int size();                                                    // Returns the number of items in the stack
     private:
-        Node* head_;                                                            // Points to first node in stack
-        Node* tail_;                                                            // Points to last node in stack
+        Node<T>* head_;                                                         // Points to first node in stack
 };

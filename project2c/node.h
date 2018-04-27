@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-template<typename T>;
+template<typename T>
 class Node {
     public:
         Node();
@@ -20,33 +20,63 @@ class Node {
         Node* next_node_;
 };
 
-Node::Node() {
+/*  Purpose :   Default constructor
+ *  Input   :   None
+ *  Output  :   None
+ */
+template<typename T>
+Node<T>::Node() {
     contents_ = "";
     next_node_ = NULL;
 }
 
-Node::Node(T contents) {
+/*  Purpose :   Overload constructor, sets contents_ to specified value
+ *  Input   :   1 T value
+ *  Output  :   None
+ */
+template<typename T>
+Node<T>::Node(T contents) {
     contents_ = contents;
     next_node_ = NULL;
 }
 
-void Node::set_contents(T contents) {
+/*  Purpose :   Sets contents to specified value
+ *  Input   :   1 T value
+ *  Output  :   None
+ */
+template<typename T>
+void Node<T>::set_contents(T contents) {
     contents_ = contents;
     
     return;
 }
 
-void Node::set_next_node(Node* next) {
+/*  Purpose :   Sets next_node_ to a specified Node pointer
+ *  Input   :   1 Node pointer
+ *  Output  :   None
+ */
+template<typename T>
+void Node<T>::set_next_node(Node* next) {
     next_node_ = next;
     
     return;
 }
 
-T Node::contents() const {
+/*  Purpose :   Returns the contents of the node
+ *  Input   :   None
+ *  Output  :   1 T value
+ */
+template<typename T>
+T Node<T>::contents() const {
     return contents_;
 }
 
-Node* Node::next_node() const {
+/*  Purpose :   Returns next_node_
+ *  Input   :   None
+ *  Output  :   1 Node pointer
+ */
+template<typename T>
+Node<T>* Node<T>::next_node() const {
     return next_node_;
 }
 
