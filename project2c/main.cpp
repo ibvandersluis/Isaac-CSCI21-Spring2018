@@ -1,30 +1,29 @@
 #include "queue.h"
+#include "stack.h"
 
 int main() {
-    Queue<string> queue;
+    Stack<string> stack;
     
-    queue.print();
-    cout << "Size: " << queue.size() << endl;
+    stack.print();
+    cout << "Size: " << stack.size() << endl;
     
-    queue.push("Odin");
-    queue.push("Thor");
-    queue.push("Loki");
+    stack.push("Odin");
+    stack.push("Thor");
+    stack.push("Loki");
     
-    queue.print();
-    cout << "Size: " << queue.size() << endl;
+    stack.print();
+    cout << "Size: " << stack.size() << endl;
     
-    cout << queue.pop() << endl;
+    cout << stack.pop() << endl;
     
-    queue.print();
-    cout << "Size: " << queue.size() << endl;
+    stack.print();
+    cout << "Size: " << stack.size() << endl;
     
-    queue.pop();
-    queue.pop();
+    stack.pop();
+    stack.pop();
     
-    queue.print();
-    cout << "Size: " << queue.size() << endl;
-    
-    queue.size();
+    stack.print();
+    cout << "Size: " << stack.size() << endl;
     
     
     return 0;
