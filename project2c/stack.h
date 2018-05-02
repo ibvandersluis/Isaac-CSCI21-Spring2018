@@ -1,3 +1,6 @@
+#ifndef STACK_H
+#define STACK_H
+
 #include "node.h"
 
 template<typename T>
@@ -120,3 +123,5 @@ template<typename T>
 bool Stack<T>::empty() {
     return (head_ == NULL);
 }
+
+#endif

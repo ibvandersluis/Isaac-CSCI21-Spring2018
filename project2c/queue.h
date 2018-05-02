@@ -1,3 +1,6 @@
+#ifndef QUEUE_H
+#define QUEUE_H
+
 #include "node.h"
 
 template<typename T>
@@ -139,3 +142,5 @@ template<typename T>
 bool Queue<T>::empty() {
     return (head_ == NULL);
 }
+
+#endif

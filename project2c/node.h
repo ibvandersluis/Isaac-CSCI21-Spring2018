@@ -2,6 +2,11 @@
 #define NODE_H
 
 #include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+#include <iomanip>
+#include <ios>
 using namespace std;
 
 template<typename T>
