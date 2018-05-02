@@ -48,6 +48,7 @@ int main(int argc, char* argv[]) {                                              
             cout << endl << "Bottom board: " << endl;
             human.printBottom();                                                // Prints player's view of their own board
             while ((rowchar < 65 || rowchar > 74) || (colchar < 48 || colchar > 57)) {
+                SS.str("");                                                     // Clears stringstream
                 cout << "Enter the letter and number of the square you wish to attack (Ex: A1): ";
                 getline(cin, square);                                           // Prompts user for valid move
                 if (square.length() > 2) {                                      // Sets too_big to true if input exceeds 2 characters
