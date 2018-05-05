@@ -31,7 +31,7 @@ class Node {
  */
 template<typename T>
 Node<T>::Node() {
-    contents_ = T();
+    contents_ = T();                                                            // Sets contents_ to zero value of given datatype
     next_node_ = NULL;
 }
 
