@@ -16,7 +16,7 @@
  */
 
 int main(int argc, char* argv[]) {
-    vector<pair<string, unsigned int>> playedgames;                             // Vector of pairs, with usernames and the number of games they played
+    vector<pair <string, unsigned int> > playedgames;                           // Vector of pairs, with usernames and the number of games they played
     Stack<string> stack;                                                        // Declares list as a stack of strings
     Queue<string> queue;                                                        // Declares list as a queue of strings
     ifstream inFS;                                                              // Filestream variable for importing usernames
