@@ -54,7 +54,7 @@ int main() {
     }
     
     
-    outFS.close();                                                              //closes files
+    outFS.close();                                                              //closes files 
     inFS.close();
     
     return 0;
