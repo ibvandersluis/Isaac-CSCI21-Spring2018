@@ -1,0 +1,44 @@
+
+
+-- PROJECT 3 PSEUDOCODE -- 
+
+1.  Opening Comments
+    a.  Author
+    b.  Date
+    c.  Purpose
+2.  Include libraries
+    a.  string
+    b.  iostream
+    c.  vector...?
+    d.  fstream
+    e.  other libraries as required
+3.  class Node {...}
+    a.  Public:
+        i.  Default/overload constructor
+        ii. Getters & setters
+    b.  Private:
+        i.  string contents
+        ii. left node/right node pointers
+4.  class Tree {...}
+    a.  Public:
+        i.  Default constructor
+        ii. Destructor
+        iii.size()
+        iv. printTree()
+        v.  insert(string contents, int weight)
+        vi. remove(string contents)
+    b.  Private:
+        i.  unsigned int size
+        ii. node pointer to root
+5.  main() {...}
+    a.  Declare variables
+        i.  fstream for import
+        ii. Others as needed
+    b.  Prompt user for import file
+    c.  Iterate through file, building tree of words
+    d.  Prompt user for prefix
+    e.  Iterate through tree until all words below
+        the iterator could complete the word
+    f.  Of the words in that subtree, print the words
+        with the greatest weight
+    g.  End program
