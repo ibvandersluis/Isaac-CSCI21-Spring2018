@@ -73,7 +73,7 @@ string Node::contents() const {
  *  Output  :   1 unsigned int value
  */
 unsigned int Node::weight() const {
-    return weignt_;
+    return weight_;
 }
 
 /*  Purpose :   Returns left_node_

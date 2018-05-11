@@ -6,15 +6,18 @@
 
 class Tree {
     public:
-        Tree();
+        Tree();                                                                 // Default constructor
         
-        unsigned int size();
-        void printTree();
-        void insert(string word, unsigned int weight);
-        void remove(string word);
+        Node* root() const;                                                     // Accessor
+        unsigned int size() const;                                              // Accessor
+        
+        void print(Node* root) const;                                           // PrintInOrder function
+        void insert(string word, unsigned int weight);                          // Insert function
+        void insert(Node* root, Node* node);                                    // Overload insert function (for recursion)
+        void prefixes(string pf, Node* node) const;                             // Prints prefixes
     private:
-        Node* root_;
-        unsigned int size_;
+        Node* root_;                                                            // Points to the root node
+        unsigned int size_;                                                     // Returns the size of the tree
 };
 
 #endif

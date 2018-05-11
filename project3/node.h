@@ -11,23 +11,23 @@ using namespace std;
 
 class Node {
     public:
-        Node();
-        Node(string word, unsigned int weight);
+        Node();                                                                 // Default constructor
+        Node(string word, unsigned int weight);                                 // Overload constructor
         
-        void set_contents(string contents);
-        void set_weight(unsigned int weight);
-        void set_left_node(Node* left);
-        void set_right_node(Node* right);
+        void set_contents(string contents);                                     // Mutator
+        void set_weight(unsigned int weight);                                   // Mutator
+        void set_left_node(Node* left);                                         // Mutator
+        void set_right_node(Node* right);                                       // Mutator
         
-        string contents() const;
-        unsigned int weight() const;
-        Node* left_node() const;
-        Node* right_node() const;
+        string contents() const;                                                // Accessor
+        unsigned int weight() const;                                            // Accessor
+        Node* left_node() const;                                                // Accessor
+        Node* right_node() const;                                               // Accessor
     private:
-        string contents_;
-        unsigned int weight_;
-        Node* left_node_;
-        Node* right_node_;
+        string contents_;                                                       // Stores the contents of the node
+        unsigned int weight_;                                                   // Stores the weight of the word in contents_
+        Node* left_node_;                                                       // Points to left node
+        Node* right_node_;                                                      // Points to right node
 };
 
 #endif
